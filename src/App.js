@@ -1,3 +1,5 @@
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 // Import the functions you need from the SDKs you need
@@ -63,7 +65,10 @@ function App() {
     signInAnonymouslyFirebase();
   }, []);
 
-  return <div className="App"></div>;
+  return <div className="App">
+<Header />
+<Footer />
+  </div>;
 }
 
 export default App;
