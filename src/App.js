@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Welcome from "./components/Welcome/Welcome";
+import Homepage from "./components/Welcome/Homepage";
 import Main from "./components/Main/Main";
 import "./App.css";
 
@@ -8,7 +9,6 @@ import "./App.css";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-import { useEffect } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -67,12 +67,14 @@ function App() {
     signInAnonymouslyFirebase();
   }, []);
 
-  return <div className="App">
-<Header />
-<Welcome />
-<Main />
-<Footer />
-  </div>;
+  return (
+    <div className="App">
+      <Header />
+      <Homepage />
+      <Main />
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

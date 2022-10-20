@@ -18,7 +18,7 @@ const Players = () => {
   ];
   return (
     <TableContainer className={classes.box}>
-      <Table  aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Players</TableCell>

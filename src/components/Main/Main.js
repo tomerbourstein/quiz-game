@@ -32,11 +32,11 @@ const Main = () => {
         <Score />
       </Card>
 
-      <Card className={classes.card}> 
-      <CardActions className={classes.actionButtons}>
-      <Button> Restart Quiz </Button>
-      <Button> Exit Game Room </Button>
-      </CardActions>
+      <Card className={classes.card}>
+        <CardActions className={classes.actionButtons}>
+          <Button> Restart Quiz </Button>
+          <Button> Exit Game Room </Button>
+        </CardActions>
       </Card>
     </Fragment>
   );

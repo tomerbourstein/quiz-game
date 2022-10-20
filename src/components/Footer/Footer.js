@@ -4,7 +4,7 @@ import classes from "./Footer.module.css";
 const Footer = () => {
   return (
     <section className={classes.footer}>
-        <HorizontalRule />
+      <HorizontalRule />
       <div>Built by Tomer Bourstein © 2022</div>
 
       <div>
