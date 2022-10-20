@@ -1,5 +1,7 @@
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Welcome from "./components/Welcome/Welcome";
+import Main from "./components/Main/Main";
 import "./App.css";
 
 // Import the functions you need from the SDKs you need
@@ -67,6 +69,8 @@ function App() {
 
   return <div className="App">
 <Header />
+<Welcome />
+<Main />
 <Footer />
   </div>;
 }
