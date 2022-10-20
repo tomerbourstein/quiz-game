@@ -2,7 +2,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import classes from "./Timer.module.css";
+// import classes from "./Timer.module.css";
 
 const Timer = (props) => {
   return (
