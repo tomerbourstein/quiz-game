@@ -22,7 +22,7 @@ const EnterRoom = () => {
         />
       </CardActions>
       <CardActions>
-        <TextField id="outlined-name" label="Room Key" defaultValue="4Z5FF" />
+        <TextField id="outlined-name" label="Enter Key" defaultValue="Room Key"  />
       </CardActions>
       <CardActions>
         <Button> Enter Room </Button>
