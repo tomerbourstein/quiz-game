@@ -13,7 +13,7 @@ import Superheroes from "superheroes";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, onDisconnect } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -93,6 +93,15 @@ const CreateRoom = () => {
         id: userId,
         nickname,
       });
+
+      const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
+      onDisconnect(presenceRef)
+        .remove()
+        .catch((err) => {
+          if (err) {
+            console.error("could not establish onDisconnect event", err);
+          }
+        });
     };
 
     signInAnonymouslyFirebase();
