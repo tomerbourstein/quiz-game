@@ -1,0 +1,41 @@
+.podium {
+  text-align: center;
+  color: #f4f4f4;
+  margin: 2rem auto 0;
+  display: flex;
+  align-items: flex-end;
+  width: 30rem;
+}
+.header {
+  text-align: center;
+  color: #f4f4f4;
+  width: 100%;
+  background-color: #00008b;
+  height: 2rem;
+}
+
+.silver {
+  background-color: #c0c0c0;
+  width: 10rem;
+  height: 10rem;
+}
+
+.gold {
+  border-right: 1rem solid white;
+  border-left: 1rem solid white;
+  background-color: #ffd700;
+  width: 10rem;
+  height: 13rem;
+}
+
+.bronze {
+  background-color: #cd7f32;
+  width: 10rem;
+  height: 7rem;
+}
+
+.user {
+  background-color: #00008b;
+  height: 2rem;
+  border-bottom: 0.8rem solid white;
+}
