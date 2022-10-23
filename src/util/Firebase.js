@@ -1,6 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, set, onDisconnect } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  onDisconnect,
+  onValue,
+} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAy4dTQPEuxVpNvJDyE_WQ7OV4e9zQvisY",
@@ -17,8 +23,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-
-
+// Create room in Realtime Database when creating a room joining room, deleting from database onDisconnet.
 const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
   let data;
   if (nickname === "" || nickname === null) {
@@ -48,6 +53,7 @@ const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
+
       // ...
       writeUserData(uid, data.nickname, data.roomKey);
     } else {
@@ -57,12 +63,13 @@ const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
   });
 
   const writeUserData = (userId, nickname, roomKey) => {
-    set(ref(db, "rooms/" + roomKey + "/players/" + userId), {
+    const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
+    set(presenceRef, {
       id: userId,
       nickname,
+      score: 0,
     });
 
-    const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
     onDisconnect(presenceRef)
       .remove()
       .catch((err) => {
@@ -75,4 +82,13 @@ const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
   signInAnonymouslyFirebase();
 };
 
-export { createRoomAndPlayers };
+const getPlayers = (roomKey) => {
+  const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
+  let data;
+  onValue(nicknamesRef, (snapshot) => {
+    data = snapshot.val();
+  });
+  return data;
+};
+
+export { createRoomAndPlayers, getPlayers };

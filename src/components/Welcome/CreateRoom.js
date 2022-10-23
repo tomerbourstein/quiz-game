@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { databaseActions } from "../../store/database-slice";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -15,6 +16,7 @@ const CreateRoom = () => {
   const [roomKey, setRoomKey] = useState("");
   const [generatedNickname, setGeneratedNickname] = useState("");
   const [nickname, setNickname] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const generateRoomKey = randomNumber(1000, 9999);
@@ -30,6 +32,7 @@ const CreateRoom = () => {
   const createRoomSubmitHandler = (event) => {
     event.preventDefault();
     createRoomAndPlayers(nickname, roomKey, generatedNickname);
+    dispatch(databaseActions.saveRoomKey(roomKey));
   };
   return (
     <Fragment>

@@ -1,5 +1,6 @@
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
+
 const createData = (
   question,
   answer1,
@@ -21,6 +22,8 @@ const questions = [
   ),
 ];
 const Quiz = () => {
+
+
   return (
     <section className={classes.box}>
       <div className={classes.question}>

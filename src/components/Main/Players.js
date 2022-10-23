@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { databaseActions } from "../../store/database-slice";
+import { getPlayers } from "../../util/Firebase";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,7 +11,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import classes from "./Players.module.css";
+
 const Players = () => {
+  const roomKey = useSelector((state) => state.database.roomKey);
+  const nicknames = useSelector(state => state.database.nicknames)
+  const dispatch = useDispatch();
   const createData = (nickname, points) => {
     return { nickname, points };
   };
@@ -16,8 +25,21 @@ const Players = () => {
     createData("Neil", 20),
     createData("Miri", 16),
   ];
+
+  useEffect(() => {
+    console.log(roomKey);
+    const playersData = getPlayers(roomKey);
+    dispatch(databaseActions.savePlayers(playersData));
+    // console.log(playersData);
+
+    // for (const user in playersData) {
+    //   console.log(playersData[user].nickname);
+    // }
+    console.log(nicknames);
+  }, [roomKey, dispatch]);
   return (
     <TableContainer className={classes.box}>
+      <p>{roomKey}</p>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
