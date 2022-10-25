@@ -24,12 +24,12 @@ const auth = getAuth(app);
 const db = getDatabase();
 
 // Create room in Realtime Database when creating a room joining room, deleting from database onDisconnet.
-const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
+const createRoomAndPlayers = (nickname, roomKey, isAdmin, generatedNickname) => {
   let data;
   if (nickname === "" || nickname === null) {
-    data = { roomKey, nickname: generatedNickname };
+    data = { roomKey, isAdmin, nickname: generatedNickname };
   } else {
-    data = { roomKey, nickname };
+    data = { roomKey, isAdmin, nickname };
   }
   console.log(data);
 
@@ -55,19 +55,20 @@ const createRoomAndPlayers = (nickname, roomKey, generatedNickname) => {
       const uid = user.uid;
 
       // ...
-      writeUserData(uid, data.nickname, data.roomKey);
+      writeUserData(uid, data.nickname, data.isAdmin, data.roomKey);
     } else {
       // User is signed out
       // ...
     }
   });
 
-  const writeUserData = (userId, nickname, roomKey) => {
+  const writeUserData = (userId, nickname, isAdmin, roomKey) => {
     const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
     set(presenceRef, {
       id: userId,
       nickname,
       score: 0,
+      isAdmin
     });
 
     onDisconnect(presenceRef)

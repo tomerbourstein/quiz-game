@@ -1,5 +1,6 @@
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
+import {getTrivia} from "../../util/index";
 
 const createData = (
   question,
@@ -22,7 +23,7 @@ const questions = [
   ),
 ];
 const Quiz = () => {
-
+  getTrivia();
 
   return (
     <section className={classes.box}>

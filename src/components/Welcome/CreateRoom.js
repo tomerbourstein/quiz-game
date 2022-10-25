@@ -31,7 +31,7 @@ const CreateRoom = () => {
 
   const createRoomSubmitHandler = (event) => {
     event.preventDefault();
-    createRoomAndPlayers(nickname, roomKey, generatedNickname);
+    createRoomAndPlayers(nickname, roomKey, true, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
   };
   return (
