@@ -14,29 +14,15 @@ import classes from "./Players.module.css";
 
 const Players = () => {
   const roomKey = useSelector((state) => state.database.roomKey);
-  const nicknames = useSelector(state => state.database.nicknames)
+  const players = useSelector((state) => state.database.players);
   const dispatch = useDispatch();
-  const createData = (nickname, points) => {
-    return { nickname, points };
-  };
 
-  const rows = [
-    createData("Dave", 12),
-    createData("Neil", 20),
-    createData("Miri", 16),
-  ];
-
+  // fetch players data from Firebase.js to save to redux store and display on screen.
   useEffect(() => {
-    console.log(roomKey);
-    const playersData = getPlayers(roomKey);
-    dispatch(databaseActions.savePlayers(playersData));
-    // console.log(playersData);
-
-    // for (const user in playersData) {
-    //   console.log(playersData[user].nickname);
-    // }
-    console.log(nicknames);
+    getPlayers(roomKey);
+    dispatch(databaseActions.savePlayers(getPlayers(roomKey)));
   }, [roomKey, dispatch]);
+
   return (
     <TableContainer className={classes.box}>
       <p>{roomKey}</p>
@@ -48,15 +34,15 @@ const Players = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {players.map((player) => (
             <TableRow
-              key={row.nickname}
+              key={player.nickname}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.nickname}
+                {player.nickname}
               </TableCell>
-              <TableCell align="right">{row.points}</TableCell>
+              <TableCell align="right">{player.score}</TableCell>
             </TableRow>
           ))}
         </TableBody>

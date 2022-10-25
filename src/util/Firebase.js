@@ -88,6 +88,7 @@ const getPlayers = (roomKey) => {
   onValue(nicknamesRef, (snapshot) => {
     data = snapshot.val();
   });
+  console.log(data);
   return data;
 };
 
