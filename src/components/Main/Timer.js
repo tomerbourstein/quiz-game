@@ -10,13 +10,6 @@ const Timer = (props) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress >= 100) {
-          return 0;
-        }
-        return oldProgress + 6.7;
-      });
-
       setCounter((oldCounter) => {
         if (oldCounter === 0) {
           return 15;
@@ -25,7 +18,17 @@ const Timer = (props) => {
       });
     }, 1000);
 
+    const progressBar = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress >= 100) {
+          return 0;
+        }
+        return oldProgress + 0.63;
+      });
+    }, 100);
+
     return () => {
+      clearInterval(progressBar);
       clearInterval(timer);
     };
   }, []);
