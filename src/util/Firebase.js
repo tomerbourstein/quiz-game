@@ -1,3 +1,4 @@
+import { databaseActions } from "../store/database-slice";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import {
@@ -24,7 +25,12 @@ const auth = getAuth(app);
 const db = getDatabase();
 
 // Create room in Realtime Database when creating a room joining room, deleting from database onDisconnet.
-const createRoomAndPlayers = (nickname, roomKey, isAdmin, generatedNickname) => {
+const createRoomAndPlayers = (
+  nickname,
+  roomKey,
+  isAdmin,
+  generatedNickname
+) => {
   let data;
   if (nickname === "" || nickname === null) {
     data = { roomKey, isAdmin, nickname: generatedNickname };
@@ -68,7 +74,7 @@ const createRoomAndPlayers = (nickname, roomKey, isAdmin, generatedNickname) => 
       id: userId,
       nickname,
       score: 0,
-      isAdmin
+      isAdmin,
     });
 
     onDisconnect(presenceRef)
@@ -83,14 +89,38 @@ const createRoomAndPlayers = (nickname, roomKey, isAdmin, generatedNickname) => 
   signInAnonymouslyFirebase();
 };
 
-const getPlayers = (roomKey) => {
-  const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
-  let data;
-  onValue(nicknamesRef, (snapshot) => {
-    data = snapshot.val();
-  });
-  console.log(data);
-  return data;
+const getPlayersThunk = (roomKey) => {
+const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
+let data;
+onValue(nicknamesRef, (snapshot) => {
+  data = snapshot.val();
+});
+console.log(data);
+return data;
 };
 
-export { createRoomAndPlayers, getPlayers };
+// const getPlayersThunk = (roomKey) => {
+//   return async (dispatch) => {
+//     const fetchData = async () => {
+//       const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
+//       return onValue(
+//         nicknamesRef,
+//         (snapshot) => {
+//            snapshot.val();
+//         },
+//         {
+//           onlyOnce: true,
+//         }
+//       );
+//     };
+//     try {
+//       const playersData = await fetchData();
+//       console.log(playersData);
+//       dispatch(databaseActions.savePlayers(playersData));
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   };
+// };
+
+export { createRoomAndPlayers, getPlayersThunk };

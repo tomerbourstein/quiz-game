@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {roomKey: "", players: [], nicknames: []};
+const initialState = {roomKey: "", players: [], nicknames: [], triviaData: []};
 
 const databaseSlice = createSlice({
   name: "database",
@@ -18,6 +18,9 @@ const databaseSlice = createSlice({
     },
     saveRoomKey (state, action) {
         state.roomKey = action.payload;
+    },
+    saveTriviaData (state,action) {
+      state.triviaData = action.payload;
     }
   },
 });

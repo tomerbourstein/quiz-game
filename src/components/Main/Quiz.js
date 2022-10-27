@@ -1,6 +1,8 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
-import {getTrivia} from "../../util/index";
+import { getTrivia } from "../../util/index";
 
 const createData = (
   question,
@@ -23,7 +25,17 @@ const questions = [
   ),
 ];
 const Quiz = () => {
-  getTrivia();
+  const getPlayers = useSelector((state) => state.database.players);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(getPlayers);
+  }, [getPlayers]);
+
+  
+  useEffect(() => {
+    dispatch(getTrivia());
+  }, [dispatch]);
 
   return (
     <section className={classes.box}>

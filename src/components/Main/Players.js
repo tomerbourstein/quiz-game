@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { databaseActions } from "../../store/database-slice";
-import { getPlayers } from "../../util/Firebase";
+// import { databaseActions } from "../../store/database-slice";
+import { getPlayersThunk } from "../../util/Firebase";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,8 +19,7 @@ const Players = () => {
 
   // fetch players data from Firebase.js to save to redux store and display on screen.
   useEffect(() => {
-    getPlayers(roomKey);
-    dispatch(databaseActions.savePlayers(getPlayers(roomKey)));
+    dispatch(getPlayersThunk());
   }, [roomKey, dispatch]);
 
   return (
