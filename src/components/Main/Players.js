@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,18 +8,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import classes from "./Players.module.css";
-const Players = () => {
-  const createData = (nickname, points) => {
-    return { nickname, points };
-  };
 
-  const rows = [
-    createData("Dave", 12),
-    createData("Neil", 20),
-    createData("Miri", 16),
-  ];
+const Players = () => {
+  const roomKey = useSelector((state) => state.database.roomKey);
+  const players = useSelector((state) => state.database.players);
+
+  // fetch players data from Firebase.js to save to redux store and display on screen.
+
   return (
     <TableContainer className={classes.box}>
+      <p>{roomKey}</p>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -26,15 +26,15 @@ const Players = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {players.map((player) => (
             <TableRow
-              key={row.nickname}
+              key={player.nickname}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.nickname}
+                {player.nickname}
               </TableCell>
-              <TableCell align="right">{row.points}</TableCell>
+              <TableCell align="right">{player.score}</TableCell>
             </TableRow>
           ))}
         </TableBody>

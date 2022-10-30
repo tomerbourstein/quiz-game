@@ -1,31 +1,46 @@
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import classes from "./Score.module.css";
 const Score = () => {
-  const createData = (nickname, points) => {
-    return { nickname, points };
+  const getPlayers = useSelector((state) => state.database.players);
+
+  // Display "Unavailable" if there less than three players, and sort them in descending order.
+  const podium = () => {
+    const DUMMY_SCORE = { nickname: "Unavailable", score: 0 };
+    let players;
+    if (getPlayers.length === 2) {
+      players = [...getPlayers, DUMMY_SCORE];
+    } else if (getPlayers.length === 1) {
+      players = [...getPlayers, DUMMY_SCORE, DUMMY_SCORE];
+    } else if (getPlayers.length === 0) {
+      players = [DUMMY_SCORE, DUMMY_SCORE, DUMMY_SCORE];
+    } else {
+      players = [...getPlayers];
+    }
+
+    const nums = players
+      .filter((n) => typeof n == "number")
+      .sort((a, b) => a - b); // If the data type of a given element is a number store it in this array (and then sort numerically)
+    const non_nums = players.filter((x) => typeof x != "number").sort(); // Store everything that is not a number in an array (and then sort lexicographically)
+    const rankedPlayers = [...nums, ...non_nums]; // combine the two arrays
+    return rankedPlayers;
   };
 
-  const score = [
-    createData("Dave", 12),
-    createData("Neil", 20),
-    createData("Miri", 16),
-  ];
   return (
     <section>
       <Box className={classes.header}> Top Scorers!</Box>
-
       <Box className={classes.podium}>
         <Box className={classes.silver}>
-          <Box className={classes.user}> {score[2].nickname} </Box>
-          {score[2].points + " points"}
+          <Box className={classes.user}> {podium()[1].nickname} </Box>
+          {podium()[1].score + " points"}
         </Box>
         <Box className={classes.gold}>
-          <Box className={classes.user}> {score[1].nickname} </Box>
-          {score[1].points + " points"}
+          <Box className={classes.user}> {podium()[0].nickname} </Box>
+          {podium()[0].score + " points"}
         </Box>
         <Box className={classes.bronze}>
-          <Box className={classes.user}> {score[0].nickname} </Box>
-          {score[0].points + " points"}
+          <Box className={classes.user}> {podium()[2].nickname}</Box>
+          {podium()[2].score + " points"}
         </Box>
       </Box>
     </section>

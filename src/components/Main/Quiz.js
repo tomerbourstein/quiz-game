@@ -1,5 +1,6 @@
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
+
 const createData = (
   question,
   answer1,
