@@ -1,4 +1,4 @@
-import { databaseActions } from "../store/database-slice";
+// import { databaseActions } from "../store/database-slice";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import {
@@ -89,7 +89,7 @@ const createRoomAndPlayers = (
   signInAnonymouslyFirebase();
 };
 
-const getPlayersThunk = (roomKey) => {
+const getPlayers = (roomKey) => {
 const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
 let data;
 onValue(nicknamesRef, (snapshot) => {
@@ -123,4 +123,4 @@ return data;
 //   };
 // };
 
-export { createRoomAndPlayers, getPlayersThunk };
+export { createRoomAndPlayers, getPlayers };
