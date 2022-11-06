@@ -1,5 +1,7 @@
-import { useSelector } from "react-redux";
-
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { databaseActions } from "../../store/database-slice";
+import { getDatabase, ref, onValue } from "firebase/database";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,8 +14,18 @@ import classes from "./Players.module.css";
 const Players = () => {
   const roomKey = useSelector((state) => state.database.roomKey);
   const players = useSelector((state) => state.database.players);
+  const dispatch = useDispatch();
 
   // fetch players data from Firebase.js to save to redux store and display on screen.
+  useEffect(() => {
+    const db = getDatabase();
+    const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
+    let data;
+    return onValue(nicknamesRef, (snapshot) => {
+      data = snapshot.val();
+      dispatch(databaseActions.savePlayers(data));
+    });
+  }, [roomKey, dispatch]);
 
   return (
     <TableContainer className={classes.box}>

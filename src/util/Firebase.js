@@ -1,14 +1,20 @@
 // import { databaseActions } from "../store/database-slice";
+// import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import {
   getDatabase,
   ref,
+  get,
+  child,
   set,
   onDisconnect,
-  onValue,
+  // onValue,
 } from "firebase/database";
 
+// const api = axios.create({
+//   baseURL: "https://quiz-game-6e76d-default-rtdb.firebaseio.com/",
+// });
 const firebaseConfig = {
   apiKey: "AIzaSyAy4dTQPEuxVpNvJDyE_WQ7OV4e9zQvisY",
   authDomain: "quiz-game-6e76d.firebaseapp.com",
@@ -89,16 +95,53 @@ const createRoomAndPlayers = (
   signInAnonymouslyFirebase();
 };
 
-const getPlayers = (roomKey) => {
-const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
-let data;
-onValue(nicknamesRef, (snapshot) => {
-  data = snapshot.val();
-});
-console.log(data);
-return data;
-};
+// const getPlayers = (roomKey) => {
+// const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
+// let data;
+// onValue(nicknamesRef, (snapshot) => {
+//   data = snapshot.val();
+// });
+// console.log(data);
+// return data;
+// };
 
+const getPlayers = (roomKey) => {
+  return (dispatch) => {
+    // api.get( `/rooms/${roomKey}/players`).then(res => {
+    //   console.log(res.data);
+    // })
+
+    //   api.get(`/rooms/${roomKey}/players`)
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log(error);
+    //   })
+    //   .then(function () {
+    //     // always executed
+    //   });
+    // }
+    const fetchData = () => {
+      const dbRef = ref(db);
+      get(child(dbRef, `rooms/${roomKey}/players`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          return snapshot.val();
+        } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      };
+      fetchData();
+  };
+};
 // const getPlayersThunk = (roomKey) => {
 //   return async (dispatch) => {
 //     const fetchData = async () => {
