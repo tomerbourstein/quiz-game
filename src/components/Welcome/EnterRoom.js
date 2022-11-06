@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
+import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -37,6 +38,7 @@ const EnterRoom = () => {
     event.preventDefault();
     createRoomAndPlayers(nickname, roomKey, false, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
+    dispatch(uiActions.startQuiz());
   };
 
   return (
