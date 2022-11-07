@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { changeQuizQuestion } from "../../util/Firebase";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
 
@@ -22,6 +25,12 @@ const questions = [
   ),
 ];
 const Quiz = () => {
+  const roomKey = useSelector((state) => state.database.roomKey);
+
+  useEffect(() => {
+    changeQuizQuestion(questions, roomKey);
+  }, [roomKey]);
+
   return (
     <section className={classes.box}>
       <div className={classes.question}>
