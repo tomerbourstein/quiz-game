@@ -36,7 +36,6 @@ const changeQuizQuestion = (question, roomKey) => {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
-      console.log(user);
 
       // Get isAdmin data for user.
       const dbRef = ref(db);
@@ -59,7 +58,6 @@ const changeQuizQuestion = (question, roomKey) => {
         });
     } else {
       // User is signed out
-      set(quizRef, {});
     }
   });
 };
@@ -94,7 +92,6 @@ const createRoomAndPlayers = (
   };
 
   onAuthStateChanged(auth, (user) => {
-    console.log(user);
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
@@ -110,8 +107,6 @@ const createRoomAndPlayers = (
 };
 
 const writeUserData = (userId, nickname, isAdmin, roomKey) => {
-  const playersRef = ref(db, "rooms/" + roomKey + "/players/");
-  console.log(playersRef);
   const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
   set(presenceRef, {
     id: userId,

@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   roomKey: "",
+  isAdmin: false,
   players: [],
-  nicknames: [],
   triviaData: [],
 };
 
@@ -13,16 +13,16 @@ const databaseSlice = createSlice({
   reducers: {
     savePlayers(state, action) {
       let playersList = [];
-      let nicknamesList = [];
       for (const user in action.payload) {
         playersList.push(action.payload[user]);
-        nicknamesList.push(action.payload[user].nickname);
       }
       state.players = playersList;
-      state.nicknames = nicknamesList;
     },
     saveRoomKey(state, action) {
       state.roomKey = action.payload;
+    },
+    setAdmin(state) {
+      state.isAdmin = true;
     },
     saveTriviaData(state, action) {
       state.triviaData = action.payload;
@@ -31,6 +31,5 @@ const databaseSlice = createSlice({
 });
 
 export const databaseActions = databaseSlice.actions;
-
 
 export default databaseSlice;
