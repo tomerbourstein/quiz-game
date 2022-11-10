@@ -6,6 +6,8 @@ const initialState = {
   createRoomDialogShow: false,
   enterRoomDialogShow: false,
   mainShow: false,
+  quizShow: false,
+  podiumShow: false,
 };
 
 const uiSlice = createSlice({
@@ -20,11 +22,18 @@ const uiSlice = createSlice({
       state.createRoomDialogShow = false;
       state.enterRoomDialogShow = true;
     },
-    startQuiz(state) {
+    openQuizComponent(state) {
       state.createRoomDialogShow = false;
       state.enterRoomDialogShow = false;
       state.homepageShow = false;
       state.mainShow = true;
+    },
+    startQuiz(state) {
+      state.quizShow = true;
+    },
+    openPodiumComponent(state) {
+      state.podiumShow = true;
+      state.quizShow = false;
     },
   },
 });

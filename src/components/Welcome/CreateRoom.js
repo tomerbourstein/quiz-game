@@ -35,7 +35,7 @@ const CreateRoom = () => {
     createRoomAndPlayers(nickname, roomKey, true, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
     dispatch(databaseActions.setAdmin());
-    dispatch(uiActions.startQuiz());
+    dispatch(uiActions.openQuizComponent());
   };
   return (
     <Fragment>

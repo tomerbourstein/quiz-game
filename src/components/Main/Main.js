@@ -1,4 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
@@ -13,23 +15,54 @@ import Typography from "@mui/material/Typography";
 
 import classes from "./Main.module.css";
 
+
+let isInitial = true;
 const Main = () => {
+  const isAdmin = useSelector((state) => state.database.isAdmin);
+  const quizShow = useSelector(state => state.ui.quizShow);
+  const podiumShow = useSelector(state => state.ui.podiumShow);
+  const dispatch = useDispatch();
+  const [quiz, setQuiz] = useState([]);
+
+
+  useEffect(() => {
+    if (isInitial) {
+      if (isAdmin) {
+        const triviaRequest = async () => {
+          const response = await fetch("https://opentdb.com/api.php?amount=10");
+          const data = await response.json();
+          setQuiz(data.results);
+        };
+        triviaRequest();
+      }
+    }
+    isInitial = false;
+  }, [isAdmin]);
+
+  const startQuizHandler = () => {
+    if(isAdmin) {
+      dispatch(uiActions.startQuiz());
+    }
+  }
+
   return (
     <Fragment>
       <Card className={classes.card}>
         <CardContent>
-          <Typography> When Ready, Click Start!</Typography>
-          <CardActions>
-            <Button>Start Quiz</Button>
-          </CardActions>
+          {isAdmin ? (
+            <Typography> When Ready, Click Start!</Typography>
+          ) : (
+            <Typography>Wait for Admin to Start the Quiz</Typography>
+          )}
+          <CardActions>{isAdmin && <Button onClick={startQuizHandler}>Start Quiz</Button>}</CardActions>
           <Box className={classes.box}>
             <Players />
-            <Quiz />
+           {quizShow ? <Quiz quiz={quiz} /> : <div>Not Everyone is Ready!</div> }
           </Box>
         </CardContent>
       </Card>
       <Card className={classes.card}>
-        <Score />
+       {podiumShow && <Score /> }
       </Card>
 
       <Card className={classes.card}>

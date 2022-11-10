@@ -1,63 +1,27 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 import { changeQuizQuestion } from "../../util/Firebase";
-// import axios from "axios";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
 
-// const api = axios.create({ baseURL: "https://opentdb.com/api.php?amount=10" });
-
-const createData = (
-  question,
-  answer1,
-  answer2,
-  answer3,
-  answer4,
-  correctAnswer
-) => {
-  return { question, answer1, answer2, answer3, answer4, correctAnswer };
-};
-const questions = [
-  createData(
-    "What Netflix show had the most streaming views in 2021",
-    "The Witcher",
-    "Queen's Gambit",
-    "Squid Game",
-    "Modern Family",
-    "Squid Game"
-  ),
-];
-let isInitial = true;
-const Quiz = () => {
-  const [quiz, setQuiz] = useState([]);
+const Quiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const roomKey = useSelector((state) => state.database.roomKey);
   const isAdmin = useSelector((state) => state.database.isAdmin);
-
-  useEffect(() => {
-    if (isInitial) {
-      if (isAdmin) {
-        const triviaRequest = async () => {
-          const response = await fetch("https://opentdb.com/api.php?amount=10");
-          const data = await response.json();
-          setQuiz(data.results);
-        };
-        triviaRequest();
-      }
-    }
-    isInitial = false;
-  }, [isAdmin]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const currentQuestionHandler = () => {
-      var interval = 5000; // how much time should the delay between two iterations be (in milliseconds)?
+      var interval = 6000; // how much time should the delay between two iterations (in milliseconds)?
       var promise = Promise.resolve();
-      console.log(quiz);
+      console.log(props.quiz);
 
-      quiz.forEach(function (el) {
+      props.quiz.forEach(function (el) {
         promise = promise.then(function () {
           console.log(el);
           setCurrentQuestion(el);
+          changeQuizQuestion(el, roomKey);
           return new Promise(function (resolve) {
             setTimeout(resolve, interval);
           });
@@ -65,25 +29,17 @@ const Quiz = () => {
       });
       promise.then(function () {
         console.log("Loop finished.");
+        setCurrentQuestion("");
+        changeQuizQuestion(null, roomKey);
+
+        dispatch(uiActions.openPodiumComponent());
       });
     };
 
-    // function forEachWithDelay(array, callback, delay) {
-    //   let i = 0;
-    //   let interval = setInterval(() => {
-    //     callback(array[i], i, array);
-    //     if (++i === array.length) clearInterval(interval);
-    //   }, delay);
-    // }
-
-    // const items = ["abc", "def", "ghi", "jkl"];
-
     if (isAdmin) {
-      // forEachWithDelay(quiz, (item, i) => console.log(`#${i}: ${item}`), 1000);
       currentQuestionHandler();
-      // changeQuizQuestion(questions, roomKey);
     }
-  }, [roomKey, isAdmin, quiz]);
+  }, [roomKey, isAdmin, props.quiz, dispatch]);
 
   return (
     <section className={classes.box}>
