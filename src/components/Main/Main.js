@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
+import { writeStartQuizData } from "../../util/Firebase";
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
@@ -15,15 +16,14 @@ import Typography from "@mui/material/Typography";
 
 import classes from "./Main.module.css";
 
-
 let isInitial = true;
 const Main = () => {
+  const roomKey = useSelector((state) => state.database.roomKey);
   const isAdmin = useSelector((state) => state.database.isAdmin);
-  const quizShow = useSelector(state => state.ui.quizShow);
-  const podiumShow = useSelector(state => state.ui.podiumShow);
+  const quizShow = useSelector((state) => state.ui.quizShow);
+  const podiumShow = useSelector((state) => state.ui.podiumShow);
   const dispatch = useDispatch();
   const [quiz, setQuiz] = useState([]);
-
 
   useEffect(() => {
     if (isInitial) {
@@ -40,10 +40,11 @@ const Main = () => {
   }, [isAdmin]);
 
   const startQuizHandler = () => {
-    if(isAdmin) {
+    if (isAdmin) {
       dispatch(uiActions.startQuiz());
+      writeStartQuizData(roomKey);
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -54,16 +55,20 @@ const Main = () => {
           ) : (
             <Typography>Wait for Admin to Start the Quiz</Typography>
           )}
-          <CardActions>{isAdmin && <Button onClick={startQuizHandler}>Start Quiz</Button>}</CardActions>
+          <CardActions>
+            {isAdmin && <Button onClick={startQuizHandler}>Start Quiz</Button>}
+          </CardActions>
           <Box className={classes.box}>
             <Players />
-           {quizShow ? <Quiz quiz={quiz} /> : <div>Not Everyone is Ready!</div> }
+            {quizShow ? (
+              <Quiz quiz={quiz} />
+            ) : (
+              <div>Not Everyone is Ready!</div>
+            )}
           </Box>
         </CardContent>
       </Card>
-      <Card className={classes.card}>
-       {podiumShow && <Score /> }
-      </Card>
+      <Card className={classes.card}>{podiumShow && <Score />}</Card>
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>

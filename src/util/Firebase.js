@@ -7,6 +7,7 @@ import {
   get,
   onDisconnect,
   child,
+  update,
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -24,8 +25,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-//Get current user
-// const currentFirebaseUser = () => {};
+
+// Post start quiz to firebase.
+
 
 // If user is recognized as Admin, post quiz question on firebase.
 const changeQuizQuestion = (question, roomKey) => {
@@ -129,4 +131,10 @@ const writeQuizData = (question, quizRef) => {
     question,
   });
 };
-export { createRoomAndPlayers, changeQuizQuestion };
+
+const writeStartQuizData = (roomKey) => {
+  const quizRef = ref(db, "rooms/" + roomKey + "/start");
+  update(quizRef,{start: true});
+};
+
+export { createRoomAndPlayers, changeQuizQuestion, writeStartQuizData };
