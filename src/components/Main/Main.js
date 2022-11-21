@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { writeStartQuizData } from "../../util/Firebase";
 import Players from "./Players";
 import Quiz from "./Quiz";
@@ -34,15 +35,25 @@ const Main = () => {
           setQuiz(data.results);
         };
         triviaRequest();
+      } else {
+        const db = getDatabase();
+        const startRef = ref(db, "rooms/" + roomKey + "/start");
+        onValue(startRef, (snapshot) => {
+          const startData = snapshot.val();
+          console.log(startData);
+          if (startData) {
+            dispatch(uiActions.startQuiz());
+          }
+        });
       }
     }
     isInitial = false;
-  }, [isAdmin]);
+  }, [isAdmin, roomKey, dispatch]);
 
   const startQuizHandler = () => {
     if (isAdmin) {
       dispatch(uiActions.startQuiz());
-      writeStartQuizData(roomKey);
+      writeStartQuizData(roomKey, true);
     }
   };
 

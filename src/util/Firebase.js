@@ -25,9 +25,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-
 // Post start quiz to firebase.
-
 
 // If user is recognized as Admin, post quiz question on firebase.
 const changeQuizQuestion = (question, roomKey) => {
@@ -132,9 +130,9 @@ const writeQuizData = (question, quizRef) => {
   });
 };
 
-const writeStartQuizData = (roomKey) => {
+const writeStartQuizData = (roomKey, isStart) => {
   const quizRef = ref(db, "rooms/" + roomKey + "/start");
-  update(quizRef,{start: true});
+  update(quizRef, { start: isStart });
 };
 
 export { createRoomAndPlayers, changeQuizQuestion, writeStartQuizData };

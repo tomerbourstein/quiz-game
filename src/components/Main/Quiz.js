@@ -1,26 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
-import { changeQuizQuestion } from "../../util/Firebase";
+import { getDatabase, ref, onValue } from "firebase/database";
+import { changeQuizQuestion, writeStartQuizData } from "../../util/Firebase";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
 
 const Quiz = (props) => {
-  const [currentQuestion, setCurrentQuestion] = useState("");
   const roomKey = useSelector((state) => state.database.roomKey);
   const isAdmin = useSelector((state) => state.database.isAdmin);
+  const currentQuestion = useSelector((state) => state.ui.currentQuestion);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const currentQuestionHandler = () => {
       var interval = 6000; // how much time should the delay between two iterations (in milliseconds)?
       var promise = Promise.resolve();
-      console.log(props.quiz);
+      // console.log(props.quiz);
 
       props.quiz.forEach(function (el) {
         promise = promise.then(function () {
-          console.log(el);
-          setCurrentQuestion(el);
+          // console.log(el);
           changeQuizQuestion(el, roomKey);
           return new Promise(function (resolve) {
             setTimeout(resolve, interval);
@@ -29,9 +29,8 @@ const Quiz = (props) => {
       });
       promise.then(function () {
         console.log("Loop finished.");
-        setCurrentQuestion("");
         changeQuizQuestion(null, roomKey);
-
+        writeStartQuizData(roomKey, null);
         dispatch(uiActions.openPodiumComponent());
       });
     };
@@ -41,13 +40,26 @@ const Quiz = (props) => {
     }
   }, [roomKey, isAdmin, props.quiz, dispatch]);
 
+  useEffect(() => {
+    const db = getDatabase();
+    const quizRef = ref(db, "rooms/" + roomKey + "/quiz");
+    let data;
+    return onValue(quizRef, (snapshot) => {
+      data = snapshot.val();
+      dispatch(uiActions.setCurrentQuestion(data.question));
+      // setCurrentQuestion(data.question);
+      console.log(data.question);
+      return data.question;
+    });
+  }, [roomKey, dispatch]);
+
   return (
     <section className={classes.box}>
       <div className={classes.question}>{currentQuestion.question + "?"}</div>
       <Timer />
       <div className={classes.answers}>
-        {[currentQuestion.incorrect_answers].map((answer) => (
-          <button> {answer}</button>
+        {[currentQuestion.incorrect_answers].map((answer, index) => (
+          <button key={index}> {answer}</button>
         ))}
         <button>{currentQuestion.correct_answer}</button>
         {/* <button> {questions.map((data) => data.answer1)} </button>
