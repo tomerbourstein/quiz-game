@@ -44,8 +44,10 @@ const Quiz = (props) => {
     let data;
     return onValue(quizRef, (snapshot) => {
       data = snapshot.val();
-      dispatch(uiActions.setCurrentQuestion(data.question));
-      return data.question;
+      if (data) {
+        dispatch(uiActions.setCurrentQuestion(data.question));
+        return data.question;
+      }
     });
   }, [roomKey, dispatch]);
 
