@@ -25,7 +25,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-// Post start quiz to firebase.
 
 // If user is recognized as Admin, post quiz question on firebase.
 const changeQuizQuestion = (question, roomKey) => {
@@ -43,7 +42,7 @@ const changeQuizQuestion = (question, roomKey) => {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const checkIsAdmin = snapshot.val();
-            console.log(checkIsAdmin);
+            console.log("Am I the Admin? " + checkIsAdmin);
 
             // Only admin post quiz questions to Firebase.
             if (checkIsAdmin) {

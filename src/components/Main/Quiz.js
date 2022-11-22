@@ -14,13 +14,11 @@ const Quiz = (props) => {
 
   useEffect(() => {
     const currentQuestionHandler = () => {
-      var interval = 6000; // how much time should the delay between two iterations (in milliseconds)?
+      var interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
       var promise = Promise.resolve();
-      // console.log(props.quiz);
 
       props.quiz.forEach(function (el) {
         promise = promise.then(function () {
-          // console.log(el);
           changeQuizQuestion(el, roomKey);
           return new Promise(function (resolve) {
             setTimeout(resolve, interval);
@@ -31,7 +29,7 @@ const Quiz = (props) => {
         console.log("Loop finished.");
         changeQuizQuestion(null, roomKey);
         writeStartQuizData(roomKey, null);
-        dispatch(uiActions.openPodiumComponent());
+        // dispatch(uiActions.openPodiumComponent());
       });
     };
 
@@ -47,8 +45,6 @@ const Quiz = (props) => {
     return onValue(quizRef, (snapshot) => {
       data = snapshot.val();
       dispatch(uiActions.setCurrentQuestion(data.question));
-      // setCurrentQuestion(data.question);
-      console.log(data.question);
       return data.question;
     });
   }, [roomKey, dispatch]);

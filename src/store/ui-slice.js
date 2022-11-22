@@ -34,7 +34,7 @@ const uiSlice = createSlice({
     },
     openPodiumComponent(state) {
       state.podiumShow = true;
-      state.quizShow = false;
+      // state.quizShow = false;
     },
     setCurrentQuestion(state, action) {
       state.currentQuestion = action.payload;
