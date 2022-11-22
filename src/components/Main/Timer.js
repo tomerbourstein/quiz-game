@@ -8,10 +8,12 @@ import Box from "@mui/material/Box";
 const Timer = (props) => {
   const currentQuestion = useSelector((state) => state.ui.currentQuestion);
   const [progress, setProgress] = useState(0);
+  const [startTime, setStartTime] = useState(Date.now());
   const [counter, setCounter] = useState(15);
 
   useEffect(() => {
     setProgress(0);
+    setStartTime(Date.now());
     setCounter(15);
 
     const timer = setInterval(() => {
@@ -23,20 +25,32 @@ const Timer = (props) => {
       });
     }, 1000);
 
-    const progressBar = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress >= 100) {
-          return 100;
-        }
-        return oldProgress + 0.63;
-      });
+    const timePassed = () => Date.now() - startTime;
+    const timePassedInSeconds = () => timePassed() / 1000;
+    const MAX_TIME = 15;
+    const timeInPercentage = () => (timePassedInSeconds() / MAX_TIME) * 100;
+    const progressBar = () =>
+      timeInPercentage() > 100 ? 100 : timeInPercentage();
+
+    const progressBarInterval = setInterval(() => {
+      console.log(timeInPercentage());
+      setProgress(progressBar());
     }, 100);
+    // const progressBar = setInterval(() => {
+
+    //   setProgress((oldProgress) => {
+    //     if (oldProgress >= 100) {
+    //       return 100;
+    //     }
+    //     return oldProgress + 0.63;
+    //   });
+    // }, 100);
 
     return () => {
-      clearInterval(progressBar);
+      clearInterval(progressBarInterval);
       clearInterval(timer);
     };
-  }, [currentQuestion]);
+  }, [currentQuestion, startTime]);
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
