@@ -45,7 +45,12 @@ const Timer = (props) => {
     //     return oldProgress + 0.63;
     //   });
     // }, 100);
-
+    const clear =()=>{
+      if (progressBar() > 150) {
+        clearInterval(progressBarInterval);
+      }
+    }
+    clear();
     return () => {
       clearInterval(progressBarInterval);
       clearInterval(timer);

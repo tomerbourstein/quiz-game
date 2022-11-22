@@ -5,11 +5,14 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import { changeQuizQuestion, writeStartQuizData } from "../../util/Firebase";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
+import { Typography } from "@mui/material";
 
 const Quiz = (props) => {
   const roomKey = useSelector((state) => state.database.roomKey);
   const isAdmin = useSelector((state) => state.database.isAdmin);
   const currentQuestion = useSelector((state) => state.ui.currentQuestion);
+  const questionNumber = useSelector(state=>state.ui.questionNumber);
+  // const [questionNumber, setQuestionNumber] = useState(-1);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,8 +54,14 @@ const Quiz = (props) => {
     });
   }, [roomKey, dispatch]);
 
+  useEffect(() => {
+    dispatch(uiActions.setQuestionNumber(questionNumber=>questionNumber+1))
+  }, [currentQuestion, dispatch]);
+
+
   return (
     <section className={classes.box}>
+      <Typography>{questionNumber}</Typography>
       <div className={classes.question}>{currentQuestion.question + "?"}</div>
       <Timer />
       <div className={classes.answers}>

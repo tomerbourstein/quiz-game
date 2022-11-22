@@ -9,6 +9,7 @@ const initialState = {
   quizShow: false,
   podiumShow: false,
   currentQuestion: "",
+  questionNumber: 1,
 };
 
 const uiSlice = createSlice({
@@ -38,7 +39,10 @@ const uiSlice = createSlice({
     },
     setCurrentQuestion(state, action) {
       state.currentQuestion = action.payload;
-    }
+    },
+    setQuestionNumber(state, action) {
+      state.questionNumber = action.payload;
+    },
   },
 });
 
