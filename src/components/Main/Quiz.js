@@ -49,13 +49,15 @@ const Quiz = (props) => {
       data = snapshot.val();
       if (data) {
         dispatch(uiActions.setCurrentQuestion(data.question));
-        return data.question;
+      } else {
+        dispatch(uiActions.setCurrentQuestion(""));
+        dispatch(uiActions.openPodiumComponent());
       }
     });
   }, [roomKey, dispatch]);
 
   useEffect(() => {
-    dispatch(uiActions.setQuestionNumber(questionNumber=>questionNumber+1))
+    dispatch(uiActions.setQuestionNumber())
   }, [currentQuestion, dispatch]);
 
 

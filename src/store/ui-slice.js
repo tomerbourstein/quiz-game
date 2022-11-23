@@ -9,7 +9,7 @@ const initialState = {
   quizShow: false,
   podiumShow: false,
   currentQuestion: "",
-  questionNumber: 1,
+  questionNumber: -2,
 };
 
 const uiSlice = createSlice({
@@ -35,13 +35,13 @@ const uiSlice = createSlice({
     },
     openPodiumComponent(state) {
       state.podiumShow = true;
-      // state.quizShow = false;
+      state.quizShow = false;
     },
     setCurrentQuestion(state, action) {
       state.currentQuestion = action.payload;
     },
-    setQuestionNumber(state, action) {
-      state.questionNumber = action.payload;
+    setQuestionNumber(state,) {
+      state.questionNumber++;
     },
   },
 });
