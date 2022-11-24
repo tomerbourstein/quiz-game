@@ -25,6 +25,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
+
+
 // If user is recognized as Admin, post quiz question on firebase.
 const changeQuizQuestion = (question, roomKey) => {
   const quizRef = ref(db, "rooms/" + roomKey + "/quiz");
@@ -33,7 +35,7 @@ const changeQuizQuestion = (question, roomKey) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
+      const { uid } = user;
 
       // Get isAdmin data for user.
       const dbRef = ref(db);
@@ -102,6 +104,46 @@ const createRoomAndPlayers = (
   });
 
   signInAnonymouslyFirebase();
+};
+
+
+
+// Get authenticated user id.
+const getUserId = () => {
+  return auth.currentUser.uid;
+};
+
+// on authSatetChange;
+const authChangeHandler = (reference, callBack) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+
+      // Get isAdmin data for user.
+      const dbRef = ref(db);
+      get(child(dbRef, reference))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const checkIsAdmin = snapshot.val();
+            // console.log("Am I the Admin? " + checkIsAdmin);
+
+            // Only admin post quiz questions to Firebase.
+            if (checkIsAdmin) {
+              callBack();
+            }
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      // User is signed out
+    }
+  });
 };
 
 const writeUserData = (userId, nickname, isAdmin, roomKey) => {
