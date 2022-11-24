@@ -25,7 +25,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-
 // If user is recognized as Admin, post quiz question on firebase.
 const changeQuizQuestion = (question, roomKey) => {
   const quizRef = ref(db, "rooms/" + roomKey + "/quiz");
@@ -42,7 +41,7 @@ const changeQuizQuestion = (question, roomKey) => {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const checkIsAdmin = snapshot.val();
-            console.log("Am I the Admin? " + checkIsAdmin);
+            // console.log("Am I the Admin? " + checkIsAdmin);
 
             // Only admin post quiz questions to Firebase.
             if (checkIsAdmin) {
@@ -61,7 +60,7 @@ const changeQuizQuestion = (question, roomKey) => {
   });
 };
 
-// Create room in Realtime Database when creating a room joining room, deleting from database onDisconnet.
+// Create room in Realtime Database when creating a room, create user when joining room, deleting from database onDisconnet.
 const createRoomAndPlayers = (
   nickname,
   roomKey,
@@ -74,12 +73,12 @@ const createRoomAndPlayers = (
   } else {
     data = { roomKey, isAdmin, nickname };
   }
-  console.log(data);
+  // console.log(data);
 
   const signInAnonymouslyFirebase = () => {
     signInAnonymously(auth)
       .then(() => {
-        console.log("Im Signed In");
+        // console.log("Im Signed In");
         // Signed in..
       })
       .catch((error) => {

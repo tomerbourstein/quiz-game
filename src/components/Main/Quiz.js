@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { changeQuizQuestion, writeStartQuizData } from "../../util/Firebase";
-import { shuffleArray } from "../../util/index";
+import { shuffleArray, timePassedInSeconds } from "../../util/index";
 import Timer from "./Timer";
 import Typography from "@mui/material/Typography";
 import classes from "./Quiz.module.css";
@@ -15,6 +15,9 @@ const Quiz = (props) => {
   const questionNumber = useSelector((state) => state.ui.questionNumber);
   const dispatch = useDispatch();
 
+  const [playerScore, setPlayerScore] = useState(0);
+  const [questionScore, setQuestionScore] = useState(0);
+
   const triviaAnswers =
     currentQuestion.question === undefined
       ? null
@@ -22,6 +25,9 @@ const Quiz = (props) => {
           currentQuestion.correct_answer
         );
   const shuffledTriviaAnswers = shuffleArray(triviaAnswers);
+
+  let startTime = Date.now();
+
   useEffect(() => {
     const currentQuestionHandler = () => {
       var interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
@@ -63,19 +69,49 @@ const Quiz = (props) => {
   }, [roomKey, dispatch]);
 
   useEffect(() => {
+    // eslint-disable-next-line
+    startTime = Date.now();
     dispatch(uiActions.setQuestionNumber());
-    console.log(shuffledTriviaAnswers);
   }, [currentQuestion, dispatch]);
+
+  useEffect(() => {
+    console.log(playerScore);
+  }, [playerScore]);
+
+  const userChoosenAnswerHandler = (value) => {
+    const MAX_TIME = 15;
+    const timeLeftInSeconds = () =>
+      MAX_TIME - Math.floor(timePassedInSeconds(startTime));
+    const timeBonus = timeLeftInSeconds() * 100;
+
+    if (currentQuestion.correct_answer === value) {
+      setQuestionScore(1000 + timeBonus);
+      setPlayerScore((prevState) => {
+        const newState = prevState + 1000 + timeBonus;
+        return newState;
+      });
+      console.log("You got it right, here are 1000 points");
+    } else {
+      console.log("You got it WRONG!!!!");
+    }
+  };
 
   return (
     <section className={classes.box}>
       <Typography>{questionNumber}</Typography>
-      <div className={classes.question}>{currentQuestion.question + "?"}</div>
+      <Typography>{questionScore}</Typography>
+
+      <div className={classes.question}>{currentQuestion.question}</div>
       <Timer />
       <div className={classes.answers}>
         {shuffledTriviaAnswers !== undefined
           ? shuffledTriviaAnswers.map((answer, index) => (
-              <button key={index}> {answer}</button>
+              <button
+                key={index}
+                onClick={() => userChoosenAnswerHandler(answer)}
+              >
+                {answer}
+              </button>
             ))
           : null}
       </div>
