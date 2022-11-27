@@ -23,7 +23,6 @@ const Score = () => {
       .sort((a, b) => b.score - a.score); // If the data type of a given element is a number store it in this array (and then sort numerically)
     const non_nums = players.filter((x) => !x.hasOwnProperty("id")).sort(); // Store everything that is not a number in an array (and then sort lexicographically)
     const rankedPlayers = [...nums, ...non_nums]; // combine the two arrays
-    console.log(rankedPlayers);
     return rankedPlayers;
   };
 

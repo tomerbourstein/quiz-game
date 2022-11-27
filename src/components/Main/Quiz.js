@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { changeQuizQuestion, writeStartQuizData, updateUserScore } from "../../util/Firebase";
+import {
+  changeQuizQuestion,
+  writeStartQuizData,
+  updateUserScore,
+} from "../../util/Firebase";
 import { shuffleArray, timePassedInSeconds } from "../../util/index";
 import Timer from "./Timer";
 import Typography from "@mui/material/Typography";
@@ -30,7 +34,7 @@ const Quiz = (props) => {
 
   useEffect(() => {
     const currentQuestionHandler = () => {
-      var interval = 5000; // how much time should the delay between two iterations (in milliseconds)?
+      var interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
       var promise = Promise.resolve();
 
       props.quiz.forEach(function (el) {
@@ -76,7 +80,7 @@ const Quiz = (props) => {
 
   useEffect(() => {
     console.log(playerScore);
-    updateUserScore(playerScore, roomKey)
+    updateUserScore(playerScore, roomKey);
   }, [playerScore, roomKey]);
 
   const userChosenAnswerHandler = (value) => {
