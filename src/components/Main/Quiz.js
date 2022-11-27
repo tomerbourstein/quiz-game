@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { changeQuizQuestion, writeStartQuizData } from "../../util/Firebase";
+import { changeQuizQuestion, writeStartQuizData, updateUserScore } from "../../util/Firebase";
 import { shuffleArray, timePassedInSeconds } from "../../util/index";
 import Timer from "./Timer";
 import Typography from "@mui/material/Typography";
@@ -76,9 +76,10 @@ const Quiz = (props) => {
 
   useEffect(() => {
     console.log(playerScore);
-  }, [playerScore]);
+    updateUserScore(playerScore, roomKey)
+  }, [playerScore, roomKey]);
 
-  const userChoosenAnswerHandler = (value) => {
+  const userChosenAnswerHandler = (value) => {
     const MAX_TIME = 15;
     const timeLeftInSeconds = () =>
       MAX_TIME - Math.floor(timePassedInSeconds(startTime));
@@ -108,7 +109,7 @@ const Quiz = (props) => {
           ? shuffledTriviaAnswers.map((answer, index) => (
               <button
                 key={index}
-                onClick={() => userChoosenAnswerHandler(answer)}
+                onClick={() => userChosenAnswerHandler(answer)}
               >
                 {answer}
               </button>
