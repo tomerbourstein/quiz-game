@@ -2,7 +2,11 @@ import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { writeStartQuizData } from "../../util/Firebase";
+import {
+  writeStartQuizData,
+  exitGameRoomFirebase,
+  updateUserScore,
+} from "../../util/Firebase";
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
@@ -24,6 +28,7 @@ const Main = () => {
   const quizShow = useSelector((state) => state.ui.quizShow);
   const podiumShow = useSelector((state) => state.ui.podiumShow);
   const dispatch = useDispatch();
+
   const [quiz, setQuiz] = useState([]);
 
   useEffect(() => {
@@ -40,7 +45,6 @@ const Main = () => {
         const startRef = ref(db, "rooms/" + roomKey + "/start");
         onValue(startRef, (snapshot) => {
           const startData = snapshot.val();
-          console.log(startData);
           if (startData) {
             dispatch(uiActions.startQuiz());
           }
@@ -57,17 +61,38 @@ const Main = () => {
     }
   };
 
+  const exitGameRoomHandler = () => {
+    isInitial = true;
+    exitGameRoomFirebase(roomKey);
+    dispatch(uiActions.exitGameRoom());
+  };
+
+  const restartQuizHandler = () => {
+    // update score to zero.
+    const newScore = 0;
+    updateUserScore(newScore, roomKey);
+    // set state in main component;
+    dispatch(uiActions.restartQuiz());
+    if (isAdmin) {
+      // if admin do fetch new questions.
+    }
+  };
   return (
     <Fragment>
       <Card className={classes.card}>
         <CardContent>
-          {isAdmin ? (
+          {isAdmin && !quizShow && (
             <Typography> When Ready, Click Start!</Typography>
-          ) : (
+          )}
+
+          {!isAdmin && !quizShow && (
             <Typography>Wait for Admin to Start the Quiz</Typography>
           )}
+
           <CardActions>
-            {isAdmin && <Button onClick={startQuizHandler}>Start Quiz</Button>}
+            {isAdmin && !quizShow && (
+              <Button onClick={startQuizHandler}>Start Quiz</Button>
+            )}
           </CardActions>
           <Box className={classes.box}>
             <Players />
@@ -83,8 +108,8 @@ const Main = () => {
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
-          <Button> Restart Quiz </Button>
-          <Button> Exit Game Room </Button>
+           {isAdmin && <Button onClick={restartQuizHandler}> Restart Quiz </Button> }
+          <Button onClick={exitGameRoomHandler}> Exit Game Room </Button>
         </CardActions>
       </Card>
     </Fragment>

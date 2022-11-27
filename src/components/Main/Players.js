@@ -18,6 +18,7 @@ const Players = () => {
   const dispatch = useDispatch();
 
   const uid = getUserId();
+
   // fetch players data from Firebase.js to save to redux store and display on screen.
   useEffect(() => {
     const db = getDatabase();

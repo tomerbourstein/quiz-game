@@ -32,6 +32,7 @@ const uiSlice = createSlice({
     },
     startQuiz(state) {
       state.quizShow = true;
+      state.podiumShow = false;
     },
     openPodiumComponent(state) {
       state.podiumShow = true;
@@ -40,8 +41,22 @@ const uiSlice = createSlice({
     setCurrentQuestion(state, action) {
       state.currentQuestion = action.payload;
     },
-    setQuestionNumber(state,) {
+    setQuestionNumber(state) {
       state.questionNumber++;
+    },
+    exitGameRoom(state) {
+      state.mainShow = false;
+      state.homepageShow = true;
+      state.startQuiz = false;
+      state.podiumShow = false;
+      state.currentQuestion = "";
+      state.questionNumber = -2;
+    },
+    restartQuiz(state) {
+      state.quizShow = false;
+      state.podiumShow = false;
+      state.currentQuestion = "";
+      state.questionNumber = -2;
     },
   },
 });

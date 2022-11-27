@@ -8,6 +8,7 @@ import {
   onDisconnect,
   child,
   update,
+  remove,
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -107,6 +108,15 @@ const getUserId = () => {
   return auth.currentUser.uid;
 };
 
+// Leave game room.
+const exitGameRoomFirebase = (roomKey) => {
+  const userId = getUserId();
+  const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
+
+  remove(presenceRef);
+  writeStartQuizData(roomKey, false)
+};
+
 const writeUserData = (userId, nickname, isAdmin, roomKey) => {
   const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
   set(presenceRef, {
@@ -142,4 +152,5 @@ export {
   writeStartQuizData,
   getUserId,
   updateUserScore,
+  exitGameRoomFirebase,
 };
