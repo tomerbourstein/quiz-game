@@ -30,7 +30,7 @@ const Quiz = (props) => {
 
   useEffect(() => {
     const currentQuestionHandler = () => {
-      var interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
+      var interval = 5000; // how much time should the delay between two iterations (in milliseconds)?
       var promise = Promise.resolve();
 
       props.quiz.forEach(function (el) {

@@ -19,10 +19,11 @@ const Score = () => {
     }
 
     const nums = players
-      .filter((n) => typeof n == "number")
-      .sort((a, b) => a - b); // If the data type of a given element is a number store it in this array (and then sort numerically)
-    const non_nums = players.filter((x) => typeof x != "number").sort(); // Store everything that is not a number in an array (and then sort lexicographically)
+      .filter((n) => n.hasOwnProperty("id"))
+      .sort((a, b) => b.score - a.score); // If the data type of a given element is a number store it in this array (and then sort numerically)
+    const non_nums = players.filter((x) => !x.hasOwnProperty("id")).sort(); // Store everything that is not a number in an array (and then sort lexicographically)
     const rankedPlayers = [...nums, ...non_nums]; // combine the two arrays
+    console.log(rankedPlayers);
     return rankedPlayers;
   };
 
