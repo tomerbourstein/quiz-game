@@ -6,6 +6,7 @@ import {
   writeStartQuizData,
   exitGameRoomFirebase,
   updateUserScore,
+  changeQuizQuestion,
 } from "../../util/Firebase";
 import Players from "./Players";
 import Quiz from "./Quiz";
@@ -48,6 +49,10 @@ const Main = () => {
           if (startData) {
             dispatch(uiActions.startQuiz());
           }
+          if (!startData) {
+            const newScore = 0;
+            updateUserScore(newScore, roomKey);
+          }
         });
       }
     }
@@ -56,8 +61,9 @@ const Main = () => {
 
   const startQuizHandler = () => {
     if (isAdmin) {
+      const isStart = true;
       dispatch(uiActions.startQuiz());
-      writeStartQuizData(roomKey, true);
+      writeStartQuizData(roomKey, isStart);
     }
   };
 
@@ -70,11 +76,15 @@ const Main = () => {
   const restartQuizHandler = () => {
     // update score to zero.
     const newScore = 0;
+    const isStart = false;
+    const resetQuestion = null;
+    changeQuizQuestion(resetQuestion, roomKey);
     updateUserScore(newScore, roomKey);
+    writeStartQuizData(roomKey, isStart);
     // set state in main component;
     dispatch(uiActions.restartQuiz());
     if (isAdmin) {
-      // if admin do fetch new questions.
+      // if admin fetch new questions.
     }
   };
   return (
@@ -108,7 +118,9 @@ const Main = () => {
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
-           {isAdmin && <Button onClick={restartQuizHandler}> Restart Quiz </Button> }
+          {isAdmin && (
+            <Button onClick={restartQuizHandler}> Restart Quiz </Button>
+          )}
           <Button onClick={exitGameRoomHandler}> Exit Game Room </Button>
         </CardActions>
       </Card>

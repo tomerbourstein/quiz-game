@@ -10,6 +10,8 @@ const initialState = {
   podiumShow: false,
   currentQuestion: "",
   questionNumber: -2,
+  correctAnswerShow: false,
+  allAnswersShow: true,
 };
 
 const uiSlice = createSlice({
@@ -57,6 +59,12 @@ const uiSlice = createSlice({
       state.podiumShow = false;
       state.currentQuestion = "";
       state.questionNumber = -2;
+    },
+    isShowAnswer(state, action) {
+      state.correctAnswerShow = action.payload;
+    },
+    showAllAnswers(state, action) {
+      state.allAnswersShow = action.payload;
     },
   },
 });

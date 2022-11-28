@@ -17,6 +17,8 @@ const Quiz = (props) => {
   const isAdmin = useSelector((state) => state.database.isAdmin);
   const currentQuestion = useSelector((state) => state.ui.currentQuestion);
   const questionNumber = useSelector((state) => state.ui.questionNumber);
+  const correctAnswerShow = useSelector((state) => state.ui.correctAnswerShow);
+  const allAnswersShow = useSelector((state) => state.ui.allAnswersShow);
   const dispatch = useDispatch();
 
   const [playerScore, setPlayerScore] = useState(0);
@@ -29,15 +31,17 @@ const Quiz = (props) => {
           currentQuestion.correct_answer
         );
   const shuffledTriviaAnswers = shuffleArray(triviaAnswers);
+  const { quiz } = props;
 
   let startTime = Date.now();
 
   useEffect(() => {
     const currentQuestionHandler = () => {
-      var interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
-      var promise = Promise.resolve();
-
-      props.quiz.forEach(function (el) {
+      const isStart = false;
+      const removeQuestion = null;
+      let interval = 18000; // how much time should the delay between two iterations (in milliseconds)?
+      let promise = Promise.resolve();
+      quiz.forEach(function (el) {
         promise = promise.then(function () {
           changeQuizQuestion(el, roomKey);
           return new Promise(function (resolve) {
@@ -47,15 +51,15 @@ const Quiz = (props) => {
       });
       promise.then(function () {
         console.log("Loop finished.");
-        changeQuizQuestion(null, roomKey);
-        writeStartQuizData(roomKey, null);
+        changeQuizQuestion(removeQuestion, roomKey);
+        writeStartQuizData(roomKey, isStart);
       });
     };
 
     if (isAdmin) {
       currentQuestionHandler();
     }
-  }, [roomKey, isAdmin, props.quiz, dispatch]);
+  }, [roomKey, isAdmin, quiz, dispatch]);
 
   useEffect(() => {
     const db = getDatabase();
@@ -64,6 +68,7 @@ const Quiz = (props) => {
     return onValue(quizRef, (snapshot) => {
       data = snapshot.val();
       if (data) {
+        dispatch(uiActions.showAllAnswers(true));
         dispatch(uiActions.setCurrentQuestion(data.question));
       } else {
         dispatch(uiActions.setCurrentQuestion(""));
@@ -83,13 +88,13 @@ const Quiz = (props) => {
     updateUserScore(playerScore, roomKey);
   }, [playerScore, roomKey]);
 
-  const userChosenAnswerHandler = (value) => {
+  const userChosenAnswerHandler = (chosenValue) => {
     const MAX_TIME = 15;
     const timeLeftInSeconds = () =>
       MAX_TIME - Math.floor(timePassedInSeconds(startTime));
     const timeBonus = timeLeftInSeconds() * 100;
-
-    if (currentQuestion.correct_answer === value) {
+    dispatch(uiActions.showAllAnswers(false));
+    if (currentQuestion.correct_answer === chosenValue) {
       setQuestionScore(1000 + timeBonus);
       setPlayerScore((prevState) => {
         const newState = prevState + 1000 + timeBonus;
@@ -108,21 +113,22 @@ const Quiz = (props) => {
 
       <div className={classes.question}>{currentQuestion.question}</div>
       <Timer />
-      <div className={classes.answers}>
-        {shuffledTriviaAnswers !== undefined
-          ? shuffledTriviaAnswers.map((answer, index) => (
-              <button
-                key={index}
-                onClick={() => userChosenAnswerHandler(answer)}
-              >
-                {answer}
-              </button>
-            ))
-          : null}
-      </div>
-
+      {allAnswersShow && (
+        <div className={classes.answers}>
+          {shuffledTriviaAnswers !== undefined
+            ? shuffledTriviaAnswers.map((answer, index) => (
+                <button
+                  key={index}
+                  onClick={() => userChosenAnswerHandler(answer)}
+                >
+                  {answer}
+                </button>
+              ))
+            : null}
+        </div>
+      )}
       <div className={classes.correctAnswer}>
-        <span> {currentQuestion.correct_answer}</span>
+        {correctAnswerShow && <span> {currentQuestion.correct_answer}</span>}
       </div>
     </section>
   );

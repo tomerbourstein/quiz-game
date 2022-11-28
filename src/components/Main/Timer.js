@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 import { timePassedInSeconds } from "../../util/index";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
@@ -7,19 +8,28 @@ import Box from "@mui/material/Box";
 
 const Timer = (props) => {
   const currentQuestion = useSelector((state) => state.ui.currentQuestion);
+  const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
-  // const [startTime, setStartTime] = useState(Date.now());
 
   let startTime = Date.now();
   useEffect(() => {
     setProgress(0);
-    // let timePassed = () => Date.now() - startTime;
-    // const timePassedInSeconds = () => timePassed() / 1000;
+
     const MAX_TIME = 15;
     const timeInPercentage = () =>
       (timePassedInSeconds(startTime) / MAX_TIME) * 100;
-    const progressBar = () =>
-      timeInPercentage() > 100 ? 100 : timeInPercentage();
+    const progressBar = () => {
+      if (timeInPercentage() > 100) {
+        dispatch(uiActions.isShowAnswer(true));
+        dispatch(uiActions.showAllAnswers(false));
+        setTimeout(() => {
+          dispatch(uiActions.isShowAnswer(false));
+        }, 2000);
+        return 100;
+      } else {
+        return timeInPercentage();
+      }
+    };
 
     const progressBarInterval = setInterval(() => {
       setProgress(progressBar());
