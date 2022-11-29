@@ -1,4 +1,23 @@
 .footer {
-  margin-top: 10%;
-  height: 10rem;
+  text-align: center;
+  margin:  6rem 0 3rem 0;
+  height: 9rem;
+}
+
+.footer hr {
+border-color: #2196f3;
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+}
+.contactIcons {
+  margin-bottom:  1.5rem ;
+  display:inline-flex;
+  gap: 20px;
+  color: #2196f3;
+}
+
+.copyrights {
+  font-size: .7rem;
 }
