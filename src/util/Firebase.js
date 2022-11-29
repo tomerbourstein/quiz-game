@@ -1,12 +1,14 @@
-// import { databaseActions } from "../store/database-slice";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import {
   getDatabase,
   ref,
   set,
+  get,
   onDisconnect,
-  onValue,
+  child,
+  update,
+  remove,
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -24,7 +26,45 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-// Create room in Realtime Database when creating a room joining room, deleting from database onDisconnet.
+// Update user's score to firebase.
+const updateUserScore = (newScore, roomKey) => {
+  const uid = getUserId();
+  const pointsRef = ref(db, `rooms/${roomKey}/players/${uid}`);
+  update(pointsRef, { score: newScore });
+};
+
+// If user is recognized as Admin, post quiz question on firebase.
+const changeQuizQuestion = (question, roomKey) => {
+  const quizRef = ref(db, "rooms/" + roomKey + "/quiz");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const { uid } = user;
+      const dbRef = ref(db);
+      // Get isAdmin data for user.
+      get(child(dbRef, `rooms/${roomKey}/players/${uid}/isAdmin`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const checkIsAdmin = snapshot.val();
+            // console.log("Am I the Admin? " + checkIsAdmin);
+            // Only admin post quiz questions to Firebase.
+            if (checkIsAdmin) {
+              writeQuizData(question, quizRef);
+            }
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      // User is signed out
+    }
+  });
+};
+
+// Create room in Realtime Database when creating a room, create user when joining room, deleting from database onDisconnet.
 const createRoomAndPlayers = (
   nickname,
   roomKey,
@@ -37,90 +77,80 @@ const createRoomAndPlayers = (
   } else {
     data = { roomKey, isAdmin, nickname };
   }
-  console.log(data);
 
   const signInAnonymouslyFirebase = () => {
     signInAnonymously(auth)
       .then(() => {
-        console.log("Im Signed In");
+        // console.log("Im Signed In");
         // Signed in..
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ...
         console.log(errorCode, errorMessage);
       });
   };
 
   onAuthStateChanged(auth, (user) => {
-    console.log(user);
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-
-      // ...
+      const { uid } = user;
       writeUserData(uid, data.nickname, data.isAdmin, data.roomKey);
     } else {
       // User is signed out
-      // ...
     }
   });
-
-  const writeUserData = (userId, nickname, isAdmin, roomKey) => {
-    const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
-    set(presenceRef, {
-      id: userId,
-      nickname,
-      score: 0,
-      isAdmin,
-    });
-
-    onDisconnect(presenceRef)
-      .remove()
-      .catch((err) => {
-        if (err) {
-          console.error("could not establish onDisconnect event", err);
-        }
-      });
-  };
 
   signInAnonymouslyFirebase();
 };
 
-const getPlayers = (roomKey) => {
-const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
-let data;
-onValue(nicknamesRef, (snapshot) => {
-  data = snapshot.val();
-});
-console.log(data);
-return data;
+// Get authenticated user id.
+const getUserId = () => {
+  return auth.currentUser.uid;
 };
 
-// const getPlayersThunk = (roomKey) => {
-//   return async (dispatch) => {
-//     const fetchData = async () => {
-//       const nicknamesRef = ref(db, "rooms/" + roomKey + "/players");
-//       return onValue(
-//         nicknamesRef,
-//         (snapshot) => {
-//            snapshot.val();
-//         },
-//         {
-//           onlyOnce: true,
-//         }
-//       );
-//     };
-//     try {
-//       const playersData = await fetchData();
-//       console.log(playersData);
-//       dispatch(databaseActions.savePlayers(playersData));
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
+// Leave game room.
+const exitGameRoomFirebase = (roomKey) => {
+  const userId = getUserId();
+  const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
 
-export { createRoomAndPlayers, getPlayers };
+  remove(presenceRef);
+  writeStartQuizData(roomKey, false)
+};
+
+const writeUserData = (userId, nickname, isAdmin, roomKey) => {
+  const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
+  set(presenceRef, {
+    id: userId,
+    nickname,
+    score: 0,
+    isAdmin,
+  });
+
+  onDisconnect(presenceRef)
+    .remove()
+    .catch((err) => {
+      if (err) {
+        console.error("could not establish onDisconnect event", err);
+      }
+    });
+};
+
+const writeQuizData = (question, quizRef) => {
+  set(quizRef, {
+    question,
+  });
+};
+
+const writeStartQuizData = (roomKey, isStart) => {
+  const quizRef = ref(db, "rooms/" + roomKey + "/start");
+  update(quizRef, { start: isStart });
+};
+
+export {
+  createRoomAndPlayers,
+  changeQuizQuestion,
+  writeStartQuizData,
+  getUserId,
+  updateUserScore,
+  exitGameRoomFirebase,
+};

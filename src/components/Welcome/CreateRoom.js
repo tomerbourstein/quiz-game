@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
+import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -33,10 +34,17 @@ const CreateRoom = () => {
     event.preventDefault();
     createRoomAndPlayers(nickname, roomKey, true, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
+    dispatch(databaseActions.setAdmin());
+    dispatch(uiActions.openQuizComponent());
   };
+
+  const copyToClipboardHandler = (roomKey) => {
+    navigator.clipboard.writeText(roomKey);
+  }
+
   return (
     <Fragment>
-      <CardContent>
+      <CardContent> 
         <Typography color="text.secondary">
           Share Room Key With Your Friends!
         </Typography>
@@ -48,7 +56,7 @@ const CreateRoom = () => {
           label="Room Key"
           value={roomKey}
         />
-        <Button> Copy </Button>
+        <Button onClick={copyToClipboardHandler}> Copy </Button>
       </CardActions>
       <CardActions>
         <TextField
