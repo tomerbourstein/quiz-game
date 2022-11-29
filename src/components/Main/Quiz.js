@@ -23,6 +23,8 @@ const Quiz = (props) => {
 
   const [playerScore, setPlayerScore] = useState(0);
   const [questionScore, setQuestionScore] = useState(0);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
+  const [strikeCounter, setStrikeCounter] = useState(1);
 
   const triviaAnswers =
     currentQuestion.question === undefined
@@ -84,8 +86,8 @@ const Quiz = (props) => {
   }, [currentQuestion, dispatch]);
 
   useEffect(() => {
-    console.log(playerScore);
     updateUserScore(playerScore, roomKey);
+    // eslint-disable-next-line
   }, [playerScore, roomKey]);
 
   const userChosenAnswerHandler = (chosenValue) => {
@@ -95,13 +97,23 @@ const Quiz = (props) => {
     const timeBonus = timeLeftInSeconds() * 100;
     dispatch(uiActions.showAllAnswers(false));
     if (currentQuestion.correct_answer === chosenValue) {
-      setQuestionScore(1000 + timeBonus);
+      setIsAnswerCorrect(true);
+      if (isAnswerCorrect) {
+        setStrikeCounter((prevStrike) => {
+          const newStrike = prevStrike + 1;
+          return newStrike;
+        });
+      }
+      const scoreWithStrikeAndTimeBonus = 1000 * strikeCounter + timeBonus;
+      setQuestionScore(scoreWithStrikeAndTimeBonus);
       setPlayerScore((prevState) => {
-        const newState = prevState + 1000 + timeBonus;
+        const newState = prevState + scoreWithStrikeAndTimeBonus;
         return newState;
       });
       console.log("You got it right, here are 1000 points");
     } else {
+      setIsAnswerCorrect(false);
+      setStrikeCounter(1);
       console.log("You got it WRONG!!!!");
     }
   };
@@ -109,7 +121,10 @@ const Quiz = (props) => {
   return (
     <section className={classes.box}>
       <Typography>{questionNumber}</Typography>
-      <Typography>{questionScore}</Typography>
+      <Typography>
+        {questionScore +
+          (strikeCounter === 1 ? null : " " + strikeCounter + "X")}
+      </Typography>
 
       <div className={classes.question}>{currentQuestion.question}</div>
       <Timer />
