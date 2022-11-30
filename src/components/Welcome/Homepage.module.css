@@ -1,4 +1,40 @@
 .card {
-  width: 30rem;
+  text-align: center;
+  width: 50rem;
   margin: 2rem auto;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.createOrJoin {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.enterRoom {
+  display: flex;
+  justify-content: center;
+}
+
+.instructions {
+  width: 5rem;
+}
+
+.nonTextField {
+  padding: 1rem 0;
+  width: 6rem;
+}
+
+
+.heroAvatar {
+  width: 2rem;
+  padding: 0 .5rem 0 1.5rem;
 }
