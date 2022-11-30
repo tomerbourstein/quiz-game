@@ -88,7 +88,7 @@ const Main = () => {
     }
   };
   return (
-    <Fragment>
+    <Fragment className={classes.Main}>
       <Card className={classes.card}>
         <CardContent>
           {isAdmin && !quizShow && (

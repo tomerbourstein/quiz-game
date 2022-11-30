@@ -4,11 +4,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Logo from "../../images/quiz-logo.png";
+import classes from "./Header.module.css";
 
 const Header = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box className={classes.header} sx={{ flexGrow: 1 }}>
+      <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar>
           <IconButton
             size="large"
@@ -19,9 +21,7 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Quizy
-          </Typography>
+          <img src={Logo} className={classes.logo} />
         </Toolbar>
       </AppBar>
     </Box>
