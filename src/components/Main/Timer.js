@@ -4,7 +4,7 @@ import { uiActions } from "../../store/ui-slice";
 import { timePassedInSeconds } from "../../util/index";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
-// import classes from "./Timer.module.css";
+import classes from "./Timer.module.css";
 
 const Timer = (props) => {
   const currentQuestion = useSelector((state) => state.ui.currentQuestion);
@@ -45,7 +45,12 @@ const Timer = (props) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
-        <LinearProgress variant="determinate" value={progress} />
+        <LinearProgress
+          className={classes.timer}
+          variant="determinate"
+          color="inherit"
+          value={progress}
+        />
       </Box>
     </Box>
   );

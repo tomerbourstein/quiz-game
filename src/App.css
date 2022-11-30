@@ -1,4 +1,3 @@
-
 /* color pallete
 backgroung white #ffff
 
@@ -14,15 +13,14 @@ dark grey text rgba(0, 0, 0, 0.6)
 .App {
   position: relative;
   min-height: 100vh;
-  
 }
 
 .wrapper {
-    padding-bottom: 15rem;
+  padding-bottom: 15rem;
 }
 
 button {
-  color: #66BFBF !important;
-  font-size: .9rem !important;
+  color: #66bfbf !important;
+  font-size: 0.9rem !important;
   font-weight: bold !important;
 }

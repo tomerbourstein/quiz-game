@@ -1,4 +1,60 @@
 .box {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 660px;
+  width: 70%;
   text-align: center;
+  gap: 1.3rem;
+}
+
+.questionNumber {
+  text-shadow: 1px 3px 0px #000000, 0px 14px 10px rgba(0, 0, 0, 0.15),
+    0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1);
+  color: #ffbb3d;
+  margin: 0;
+  font-size: 2rem;
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.correctScore {
+  /* text-shadow: 1px 3px 0px #000000, 0px 14px 10px rgba(0, 0, 0, 0.15),
+  0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1); */
+  color: #00e46b;
+  margin: 0;
+  font-size: 1.3rem;
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.question {
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  padding: 15px 25px;
+  font-size: 1.4rem;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff !important;
+  position: relative;
+  display: inline-block;
+  background-color: #f1c40f;
+  box-shadow: 1px 3px 0px 0px #000000;
+  text-shadow: 0.5px 2px 0px rgb(120, 120, 120);
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.btn:hover {
+  background-color: #ffde29;
 }

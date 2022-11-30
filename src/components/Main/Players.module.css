@@ -9,14 +9,16 @@
     0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1);
   color: #ff0063;
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.6rem;
   font-family: "Bangers", cursive;
+  letter-spacing: 3px;
 }
 
 .playersTable th {
   color: rgba(62, 62, 62, 0.6);
   padding: 16px 7px;
   font-family: "Bangers", cursive;
+  letter-spacing: 3px;
 }
 
 .playersTable td {
@@ -24,6 +26,7 @@
   font-weight: bold;
   padding-left: 0;
   font-family: "Bangers", cursive;
+  letter-spacing: 2px;
 }
 
 .tableRow th {
@@ -31,11 +34,26 @@
   justify-content: start;
   align-items: center;
   gap: 0.3rem;
-  text-shadow: 0px 14px 10px rgba(0, 0, 0, 0.15), 0px 6px 2px rgba(0, 0, 0, 0.1),
-    0px 34px 30px rgba(0, 0, 0, 0.1);
-  font-family: "Bangers", cursive;
+  /* text-shadow: 0px 14px 10px rgba(0, 0, 0, 0.15), 0px 6px 2px rgba(0, 0, 0, 0.1),
+    0px 34px 30px rgba(0, 0, 0, 0.1); */
 }
 .arrow {
   width: 1.6rem;
   height: 1.6rem;
+  animation-name: arrow;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes arrow {
+  0% {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }

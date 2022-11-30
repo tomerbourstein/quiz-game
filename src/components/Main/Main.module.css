@@ -6,6 +6,7 @@
 
 .box {
   display: flex;
+  justify-content: start;
   gap: 2rem;
 }
 

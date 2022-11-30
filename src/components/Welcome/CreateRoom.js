@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
 import { uiActions } from "../../store/ui-slice";
@@ -45,7 +45,7 @@ const CreateRoom = () => {
   };
 
   return (
-    <Fragment className={classes.createRoomButtons}>
+    <div className={classes.createRoomButtons}>
       {/* <CardContent className={classes.nonTextField}>
         <Typography>Share With Friends!</Typography>
       </CardContent> */}
@@ -96,7 +96,7 @@ const CreateRoom = () => {
       <CardActions className={classes.enterRoom}>
         <Button onClick={createRoomSubmitHandler}> Create Room </Button>
       </CardActions>
-    </Fragment>
+    </div>
   );
 };
 
