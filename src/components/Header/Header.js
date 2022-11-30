@@ -1,7 +1,7 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../images/quiz-logo.png";
@@ -21,7 +21,7 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={Logo} className={classes.logo} />
+          <img src={Logo} alt="quizi logo" className={classes.logo} />
         </Toolbar>
       </AppBar>
     </Box>

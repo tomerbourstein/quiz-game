@@ -46,6 +46,7 @@ span {
 .contactUs {
   display: flex;
   flex-direction: column;
+  gap: 0.4rem;
 }
 .contactIcons {
   display: inline-flex;

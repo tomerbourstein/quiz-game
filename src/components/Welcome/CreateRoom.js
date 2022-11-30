@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
 import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+// import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import InputAdornment from "@mui/material/InputAdornment";
 import { createRoomAndPlayers } from "../../util/Firebase";
 import { randomNumber } from "../../util/index";
@@ -82,7 +82,11 @@ const CreateRoom = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end" className={classes.adornment}>
-                  <img src={Hero} className={classes.heroAvatar}/>
+                  <img
+                    src={Hero}
+                    alt="superhero avatar"
+                    className={classes.heroAvatar}
+                  />
                 </InputAdornment>
               ),
             }}

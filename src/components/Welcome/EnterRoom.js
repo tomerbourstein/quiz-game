@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
 import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+// import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -60,13 +60,19 @@ const EnterRoom = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end" className={classes.adornment}>
-                  <img src={Hero} className={classes.heroAvatar} />
+                  <img
+                    src={Hero}
+                    alt="superhero avatar"
+                    className={classes.heroAvatar}
+                  />
                 </InputAdornment>
               ),
             }}
           />
         </CardActions>
-        <CardActions className={classes.nonTextField}>Enter Room Key </CardActions>
+        <CardActions className={classes.nonTextField}>
+          Enter Room Key{" "}
+        </CardActions>
         <CardActions>
           <TextField
             fullWidth

@@ -1,10 +1,10 @@
-import HorizontalRule from "../UI/HorizontalRule";
 import classes from "./Footer.module.css";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
+// import MailOutlineIcon from "@mui/icons-material/MailOutline";
+// import HorizontalRule from "../UI/HorizontalRule";
 
 const Footer = () => {
   return (
