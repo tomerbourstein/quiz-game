@@ -50,7 +50,7 @@
   height: 13rem;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
   gap: 0.8rem;
 }
 
@@ -60,7 +60,7 @@
   background-color: #66bfbf;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .silver {
