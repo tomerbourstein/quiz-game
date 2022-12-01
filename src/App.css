@@ -1,3 +1,26 @@
-/* body {
-    text-align: center;
-} */
+/* color pallete
+backgroung white #ffff
+
+dark torquise #66BFBF
+
+light grey #EAF6F6
+
+bright pink #FF0063 
+
+dark grey text rgba(0, 0, 0, 0.6)
+*/
+
+.App {
+  position: relative;
+  min-height: 100vh;
+}
+
+.wrapper {
+  padding-bottom: 15rem;
+}
+
+button {
+  color: #66bfbf !important;
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+}

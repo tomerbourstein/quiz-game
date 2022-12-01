@@ -3,15 +3,17 @@ import { useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
 import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+// import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 
+import Hero from "../../images/hero-icon-50px.png";
 import { createRoomAndPlayers } from "../../util/Firebase";
 import { randomNumber } from "../../util/index";
 import Superheroes from "superheroes";
-// import classes from "./Homepage.module.css";
+import classes from "./Homepage.module.css";
 
 const EnterRoom = () => {
   const [roomKey, setRoomKey] = useState("");
@@ -41,27 +43,53 @@ const EnterRoom = () => {
     dispatch(uiActions.openQuizComponent());
   };
 
+  const pasteFromClipboardHandler = () => {};
   return (
     <Fragment>
-      <CardContent>
-        <Typography color="text.secondary">Enter Room Key</Typography>
-      </CardContent>
-      <CardActions>
-        <TextField
-          id="outlined-name"
-          label="Choose Nickname"
-          value={!nickname && nickname !== "" ? generatedNickname : nickname}
-          onChange={nicknameChangeHandler}
-        />
-      </CardActions>
-      <CardActions>
-        <TextField
-          id="outlined-name"
-          label="Enter Key"
-          onChange={roomKeyChangeHandler}
-        />
-      </CardActions>
-      <CardActions>
+      {/* <CardContent className={classes.nonTextField}>
+        <Typography>Enter Key</Typography>
+      </CardContent> */}
+      <div className={classes.actionButtons}>
+        <CardActions>
+          <TextField
+            fullWidth
+            id="outlined-name"
+            label="Choose Nickname"
+            value={!nickname && nickname !== "" ? generatedNickname : nickname}
+            onChange={nicknameChangeHandler}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" className={classes.adornment}>
+                  <img
+                    src={Hero}
+                    alt="superhero avatar"
+                    className={classes.heroAvatar}
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </CardActions>
+        <CardActions className={classes.nonTextField}>
+          Enter Room Key{" "}
+        </CardActions>
+        <CardActions>
+          <TextField
+            fullWidth
+            id="outlined-name"
+            label="Enter Key"
+            onChange={roomKeyChangeHandler}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" className={classes.adornment}>
+                  <Button onClick={pasteFromClipboardHandler}> Paste </Button>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </CardActions>
+      </div>
+      <CardActions className={classes.enterRoom}>
         <Button onClick={enterRoomSubmitHandler}> Enter Room </Button>
       </CardActions>
     </Fragment>

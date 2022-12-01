@@ -1,13 +1,20 @@
 .card {
+  color: rgba(0, 0, 0, 0.6) !important;
   width: 80vw;
   margin: 2rem auto;
 }
 
 .box {
   display: flex;
+  justify-content: start;
+  gap: 2rem;
 }
 
 .actionButtons {
   padding: 0.7rem 10rem;
   justify-content: space-around;
+}
+
+.instructions {
+  margin-left: 1rem;
 }

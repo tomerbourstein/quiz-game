@@ -1,8 +1,22 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import Card from "@mui/material/Card";
+
+import GoldTrophy from "../../images/trophy-gold.png";
+import SilverTrophy from "../../images/trophy-silver.png";
+import BronzeTrophy from "../../images/trophy-bronze.png";
+
 import classes from "./Score.module.css";
+
 const Score = () => {
   const getPlayers = useSelector((state) => state.database.players);
+  const [open, setOpen] = useState(true);
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
 
   // Display "Unavailable" if there less than three players, and sort them in descending order.
   const podium = () => {
@@ -28,21 +42,38 @@ const Score = () => {
 
   return (
     <section>
-      <Box className={classes.header}> Top Scorers!</Box>
-      <Box className={classes.podium}>
-        <Box className={classes.silver}>
-          <Box className={classes.user}> {podium()[1].nickname} </Box>
-          {podium()[1].score + " points"}
-        </Box>
-        <Box className={classes.gold}>
-          <Box className={classes.user}> {podium()[0].nickname} </Box>
-          {podium()[0].score + " points"}
-        </Box>
-        <Box className={classes.bronze}>
-          <Box className={classes.user}> {podium()[2].nickname}</Box>
-          {podium()[2].score + " points"}
-        </Box>
-      </Box>
+      <Dialog onClose={handleClose} open={open}>
+        <Card className={classes.card}>
+          <Box className={classes.header}> Top Scorers!</Box>
+          <Box className={classes.podium}>
+            <Box className={classes.podiumBox}>
+              <Box className={classes.user}> {podium()[1].nickname} </Box>
+              <Box className={classes.silver}>
+                <p>{podium()[1].score + " points"}</p>
+                <div><img src={SilverTrophy} alt="silver trophy"/></div>
+
+              </Box>
+            </Box>
+
+            <Box className={classes.podiumBox}>
+              <Box className={classes.user}> {podium()[0].nickname} </Box>
+              <Box className={classes.gold}>
+                <p>{podium()[0].score + " points"}</p>
+                <div><img src={GoldTrophy} alt="gold trophy"/></div>
+              </Box>
+            </Box>
+
+            <Box className={classes.podiumBox}>
+              <Box className={classes.user}> {podium()[2].nickname}</Box>
+              <Box className={classes.bronze}>
+                <p>{podium()[2].score + " points"}</p>
+                <div><img src={BronzeTrophy} alt="bronze trophy"/></div>
+
+              </Box>
+            </Box>
+          </Box>
+        </Card>
+      </Dialog>
     </section>
   );
 };

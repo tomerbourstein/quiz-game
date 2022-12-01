@@ -1,23 +1,65 @@
 .footer {
+  position: absolute;
+   bottom: 0;
+   width: 100%;
+  background-color: #eaf6f6;
   text-align: center;
-  margin:  6rem 0 3rem 0;
-  height: 9rem;
+  font-size: 0.7rem;
 }
 
-.footer hr {
-border-color: #2196f3;
+.footer svg,
+a,
+span {
+  color: #66bfbf;
+  font-weight: 500;
+  text-decoration: none;
 }
-
+.footer a:hover, svg:hover {
+  color: #b2efef;
+}
 .footer p {
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #ff0063;
+  font-weight: bold;
+}
+.information {
+  height: 11rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 10rem;
+}
+
+.techStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+}
+
+.aboutMe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contactUs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 .contactIcons {
-  margin-bottom:  1.5rem ;
-  display:inline-flex;
-  gap: 20px;
+  display: inline-flex;
+  gap: 0.7rem;
   color: #2196f3;
 }
 
 .copyrights {
-  font-size: .7rem;
+  color: #ffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #66bfbf;
+  height: 3rem;
+  font-size: 0.6rem;
 }

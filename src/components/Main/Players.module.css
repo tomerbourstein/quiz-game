@@ -1,4 +1,59 @@
 .box {
-  width: 12rem !important;
+  width: 14rem;
   margin: 1rem;
+}
+
+.roomKey {
+  text-align: center;
+  text-shadow: 0px 3px 0px #b2a98f, 0px 14px 10px rgba(0, 0, 0, 0.15),
+    0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1);
+  color: #ff0063;
+  margin: 0;
+  font-size: 2.6rem;
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.playersTable th {
+  color: rgba(62, 62, 62, 0.6);
+  padding: 16px 7px;
+  font-family: "Bangers", cursive;
+  letter-spacing: 3px;
+}
+
+.playersTable td {
+  color: #66bfbf;
+  font-weight: bold;
+  padding-left: 0;
+  font-family: "Bangers", cursive;
+  letter-spacing: 2px;
+}
+
+.tableRow th {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.3rem;
+  /* text-shadow: 0px 14px 10px rgba(0, 0, 0, 0.15), 0px 6px 2px rgba(0, 0, 0, 0.1),
+    0px 34px 30px rgba(0, 0, 0, 0.1); */
+}
+.arrow {
+  width: 1.6rem;
+  height: 1.6rem;
+  animation-name: arrow;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes arrow {
+  0% {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }

@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -11,6 +11,7 @@ import {
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
+import Divider from "@mui/material/Divider";
 
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -18,7 +19,7 @@ import Box from "@mui/material/Box";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 
 import classes from "./Main.module.css";
 
@@ -88,15 +89,17 @@ const Main = () => {
     }
   };
   return (
-    <Fragment>
+    <div className={classes.Main}>
       <Card className={classes.card}>
         <CardContent>
           {isAdmin && !quizShow && (
-            <Typography> When Ready, Click Start!</Typography>
+            <p className={classes.instructions}> When Ready, Click Start!</p>
           )}
 
           {!isAdmin && !quizShow && (
-            <Typography>Wait for Admin to Start the Quiz</Typography>
+            <p className={classes.instructions}>
+              Wait for Admin to Start the Quiz
+            </p>
           )}
 
           <CardActions>
@@ -106,6 +109,7 @@ const Main = () => {
           </CardActions>
           <Box className={classes.box}>
             <Players />
+            <Divider orientation="vertical" flexItem />
             {quizShow ? (
               <Quiz quiz={quiz} />
             ) : (
@@ -114,7 +118,8 @@ const Main = () => {
           </Box>
         </CardContent>
       </Card>
-      <Card className={classes.card}>{podiumShow && <Score />}</Card>
+
+     {podiumShow && <Score />}
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
@@ -124,7 +129,7 @@ const Main = () => {
           <Button onClick={exitGameRoomHandler}> Exit Game Room </Button>
         </CardActions>
       </Card>
-    </Fragment>
+    </div>
   );
 };
 

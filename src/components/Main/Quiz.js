@@ -9,7 +9,7 @@ import {
 } from "../../util/Firebase";
 import { shuffleArray, timePassedInSeconds } from "../../util/index";
 import Timer from "./Timer";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import classes from "./Quiz.module.css";
 
 const Quiz = (props) => {
@@ -120,11 +120,11 @@ const Quiz = (props) => {
 
   return (
     <section className={classes.box}>
-      <Typography>{questionNumber}</Typography>
-      <Typography>
+      <p className={classes.questionNumber}>{questionNumber}</p>
+      <p className={classes.correctScore}>
         {questionScore +
           (strikeCounter === 1 ? null : " " + strikeCounter + "X")}
-      </Typography>
+      </p>
 
       <div className={classes.question}>{currentQuestion.question}</div>
       <Timer />
@@ -135,6 +135,7 @@ const Quiz = (props) => {
                 <button
                   key={index}
                   onClick={() => userChosenAnswerHandler(answer)}
+                  className={classes.btn}
                 >
                   {answer}
                 </button>

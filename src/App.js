@@ -16,8 +16,10 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {homepageShow && <Homepage />}
-      {mainShow && <Main />}
+      <div className="wrapper">
+        {homepageShow && <Homepage />}
+        {mainShow && <Main />}
+      </div>
       <Footer />
     </div>
   );
