@@ -1,41 +1,98 @@
+.card {
+  font-family: "Bangers", cursive;
+  letter-spacing: 2px;
+  width: 40vw;
+  margin: 1.5rem;
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  overflow-y: hidden !important;
+}
+
 .podium {
   text-align: center;
   color: #f4f4f4;
-  margin: 2rem auto 0;
+  margin: 1rem auto 0;
   display: flex;
   align-items: flex-end;
+  gap: 1rem;
   width: 30rem;
 }
+
+.card:before {
+  background: white none repeat scroll 0 0;
+  box-shadow: 0 0 29px 10px #ffffff;
+  content: "";
+  filter: blur(20px);
+  height: 90%;
+  position: absolute;
+  top: 0;
+  transform: rotate(25deg);
+  width: 25px;
+  opacity: 0.6;
+  animation: light 4s infinite;
+}
+
+.podium p {
+  margin-top: 0.3rem;
+}
 .header {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #f4f4f4;
   width: 100%;
-  background-color: #00008b;
+  background-color: #ff0063;
   height: 2rem;
+}
+
+.podiumBox {
+  width: 10rem;
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 0.8rem;
+}
+
+.silver,
+.gold,
+.bronze {
+  background-color: #66bfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
 
 .silver {
-  background-color: #c0c0c0;
-  width: 10rem;
-  height: 10rem;
+  height: 60%;
 }
 
 .gold {
-  border-right: 1rem solid white;
-  border-left: 1rem solid white;
-  background-color: #ffd700;
-  width: 10rem;
-  height: 13rem;
+  height: 80%;
 }
 
 .bronze {
-  background-color: #cd7f32;
-  width: 10rem;
-  height: 7rem;
+  height: 50%;
 }
 
 .user {
-  background-color: #00008b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff0063;
   height: 2rem;
-  border-bottom: 0.8rem solid white;
+}
+
+@keyframes light {
+  0% {
+    left: -25%;
+  }
+  25% {
+    left: 85%;
+    /* opacity: 1; */
+  }
+  100% {
+    left: 85%;
+    opacity: 0;
+  }
 }

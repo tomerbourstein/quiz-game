@@ -119,7 +119,7 @@ const Main = () => {
         </CardContent>
       </Card>
 
-      <Card className={classes.card}>{podiumShow && <Score />}</Card>
+     {podiumShow && <Score />}
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
