@@ -114,7 +114,7 @@ const exitGameRoomFirebase = (roomKey) => {
   const presenceRef = ref(db, "rooms/" + roomKey + "/players/" + userId);
 
   remove(presenceRef);
-  writeStartQuizData(roomKey, false)
+  writeStartQuizData(roomKey, false);
 };
 
 const writeUserData = (userId, nickname, isAdmin, roomKey) => {

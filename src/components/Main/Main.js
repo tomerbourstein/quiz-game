@@ -8,18 +8,16 @@ import {
   updateUserScore,
   changeQuizQuestion,
 } from "../../util/Firebase";
+
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
 import Divider from "@mui/material/Divider";
-
-import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-
+import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
 
 import classes from "./Main.module.css";
 
@@ -93,7 +91,7 @@ const Main = () => {
       <Card className={classes.card}>
         <CardContent>
           {isAdmin && !quizShow && (
-            <p className={classes.instructions}> When Ready, Click Start!</p>
+            <p className={classes.instructions}> When Ready,</p>
           )}
 
           {!isAdmin && !quizShow && (
@@ -102,7 +100,7 @@ const Main = () => {
             </p>
           )}
 
-          <CardActions>
+          <CardActions sx={{ height: "2.1rem" }}>
             {isAdmin && !quizShow && (
               <Button onClick={startQuizHandler}>Start Quiz</Button>
             )}
@@ -110,16 +108,12 @@ const Main = () => {
           <Box className={classes.box}>
             <Players />
             <Divider orientation="vertical" flexItem />
-            {quizShow ? (
-              <Quiz quiz={quiz} />
-            ) : (
-              <div>Not Everyone is Ready!</div>
-            )}
+            {quizShow ? <Quiz quiz={quiz} /> : <div> </div>}
           </Box>
         </CardContent>
       </Card>
 
-     {podiumShow && <Score />}
+      {podiumShow && <Score />}
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
