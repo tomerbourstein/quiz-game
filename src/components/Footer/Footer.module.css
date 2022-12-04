@@ -63,3 +63,16 @@ span {
   height: 3rem;
   font-size: 0.6rem;
 }
+
+
+@media only screen and (max-width: 600px) {
+
+  .information {
+    height: 6rem;
+    gap:1rem
+  }
+  .aboutMe, .techStack {
+    display: none;
+  }
+
+}
