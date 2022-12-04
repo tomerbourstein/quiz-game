@@ -1,16 +1,13 @@
-import classes from "./Footer.module.css";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-// import MailOutlineIcon from "@mui/icons-material/MailOutline";
-// import HorizontalRule from "../UI/HorizontalRule";
+
+import classes from "./Footer.module.css";
 
 const Footer = () => {
   return (
     <section className={classes.footer}>
-      {/* <HorizontalRule /> */}
-
       <div className={classes.information}>
         <div className={classes.contactUs}>
           <p>Follow our Socials</p>
@@ -58,7 +55,6 @@ const Footer = () => {
           <span>Full Stack Developer</span>
         </div>
       </div>
-      {/* <HorizontalRule /> */}
 
       <div className={classes.copyrights}>
         <h4>Built by Tomer Bourstein © 2022</h4>

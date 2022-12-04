@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import Card from "@mui/material/Card";
@@ -50,8 +51,9 @@ const Score = () => {
               <Box className={classes.user}> {podium()[1].nickname} </Box>
               <Box className={classes.silver}>
                 <p>{podium()[1].score + " points"}</p>
-                <div><img src={SilverTrophy} alt="silver trophy"/></div>
-
+                <div>
+                  <img src={SilverTrophy} alt="silver trophy" />
+                </div>
               </Box>
             </Box>
 
@@ -59,7 +61,9 @@ const Score = () => {
               <Box className={classes.user}> {podium()[0].nickname} </Box>
               <Box className={classes.gold}>
                 <p>{podium()[0].score + " points"}</p>
-                <div><img src={GoldTrophy} alt="gold trophy"/></div>
+                <div>
+                  <img src={GoldTrophy} alt="gold trophy" />
+                </div>
               </Box>
             </Box>
 
@@ -67,8 +71,9 @@ const Score = () => {
               <Box className={classes.user}> {podium()[2].nickname}</Box>
               <Box className={classes.bronze}>
                 <p>{podium()[2].score + " points"}</p>
-                <div><img src={BronzeTrophy} alt="bronze trophy"/></div>
-
+                <div>
+                  <img src={BronzeTrophy} alt="bronze trophy" />
+                </div>
               </Box>
             </Box>
           </Box>

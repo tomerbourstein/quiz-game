@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { timePassedInSeconds } from "../../util/index";
+
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import classes from "./Timer.module.css";

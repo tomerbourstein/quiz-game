@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { databaseActions } from "../../store/database-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getUserId } from "../../util/Firebase";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -53,9 +54,6 @@ const Players = () => {
                 className={classes.tableRow}
               >
                 <TableCell component="th" scope="row">
-                  {/* {uid === player.id
-                    ? player.nickname + " <="
-                    : player.nickname} */}
                   <span>{player.nickname}</span>{" "}
                   <span>{uid === player.id ? arrowIcon : null}</span>
                 </TableCell>

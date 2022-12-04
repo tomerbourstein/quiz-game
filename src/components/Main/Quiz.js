@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { shuffleArray, timePassedInSeconds } from "../../util/index";
 import {
   changeQuizQuestion,
   writeStartQuizData,
   updateUserScore,
 } from "../../util/Firebase";
-import { shuffleArray, timePassedInSeconds } from "../../util/index";
+
 import Timer from "./Timer";
-// import Typography from "@mui/material/Typography";
 import classes from "./Quiz.module.css";
 
 const Quiz = (props) => {
