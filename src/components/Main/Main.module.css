@@ -17,6 +17,7 @@
 
 .instructions {
   margin-left: 1rem;
+  font-family: "Bangers", cursive;
 }
 
 @media only screen and (max-width: 600px) {

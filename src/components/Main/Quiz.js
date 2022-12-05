@@ -53,6 +53,7 @@ const Quiz = (props) => {
       });
       promise.then(function () {
         console.log("Loop finished.");
+        dispatch(uiActions.openPodiumComponent());
         changeQuizQuestion(removeQuestion, roomKey);
         writeStartQuizData(roomKey, isStart);
       });
@@ -74,7 +75,6 @@ const Quiz = (props) => {
         dispatch(uiActions.setCurrentQuestion(data.question));
       } else {
         dispatch(uiActions.setCurrentQuestion(""));
-        dispatch(uiActions.openPodiumComponent());
       }
     });
   }, [roomKey, dispatch]);

@@ -66,7 +66,9 @@ span {
 
 
 @media only screen and (max-width: 600px) {
-
+.footer {
+  letter-spacing: .1rem;
+}
   .information {
     height: 6rem;
     gap:1rem
