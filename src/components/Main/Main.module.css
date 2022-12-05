@@ -24,4 +24,6 @@
   .playersTable {
     visibility: hidden;
   }
+  .openScoreboardButton {
+margin-top: 2rem;  }
 }

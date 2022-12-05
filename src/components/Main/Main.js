@@ -119,7 +119,7 @@ const Main = () => {
             {quizShow ? <Quiz quiz={quiz} /> : <div> </div>}
           </Box>
 
-          <CardActions>
+          <CardActions className={classes.openScoreboardButton}>
             <DrawerLeft />
           </CardActions>
         </CardContent>

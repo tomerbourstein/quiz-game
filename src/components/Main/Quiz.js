@@ -9,6 +9,7 @@ import {
   updateUserScore,
 } from "../../util/Firebase";
 
+import Stack from "@mui/material/Stack";
 import Timer from "./Timer";
 import classes from "./Quiz.module.css";
 
@@ -25,6 +26,7 @@ const Quiz = (props) => {
   const [questionScore, setQuestionScore] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [strikeCounter, setStrikeCounter] = useState(1);
+  const [showBonus, setShowBonus] = useState(false);
 
   const triviaAnswers =
     currentQuestion.question === undefined
@@ -98,6 +100,12 @@ const Quiz = (props) => {
     dispatch(uiActions.showAllAnswers(false));
     if (currentQuestion.correct_answer === chosenValue) {
       setIsAnswerCorrect(true);
+      setShowBonus(true);
+
+      setTimeout(() => {
+        setShowBonus(false);
+      }, 2000);
+
       if (isAnswerCorrect) {
         setStrikeCounter((prevStrike) => {
           const newStrike = prevStrike + 1;
@@ -118,18 +126,33 @@ const Quiz = (props) => {
     }
   };
 
+  const transformText = (text) => {
+    if (text === undefined) {
+      return;
+    }
+
+    const newText = text.replace(/&quot;|&#039;/g, "'").replace(/&amp;/g, "&");
+    return newText;
+  };
   return (
     <section className={classes.box}>
       <p className={classes.questionNumber}>{questionNumber}</p>
-      <p className={classes.correctScore}>
-        {questionScore +
-          (strikeCounter === 1 ? null : " " + strikeCounter + "X")}
-      </p>
+      <div className={classes.correctScore}>
+        {showBonus && (
+          <p>
+            {"+" +
+              questionScore +
+              (strikeCounter === 1 ? " " : " " + strikeCounter + "X")}
+          </p>
+        )}
+      </div>
 
-      <div className={classes.question}>{currentQuestion.question}</div>
+      <div className={classes.question}>
+        {transformText(currentQuestion.question)}
+      </div>
       <Timer />
       {allAnswersShow && (
-        <div className={classes.answers}>
+        <Stack className={classes.answers}>
           {shuffledTriviaAnswers !== undefined
             ? shuffledTriviaAnswers.map((answer, index) => (
                 <button
@@ -137,11 +160,11 @@ const Quiz = (props) => {
                   onClick={() => userChosenAnswerHandler(answer)}
                   className={classes.btn}
                 >
-                  {answer}
+                  {transformText(answer)}
                 </button>
               ))
             : null}
-        </div>
+        </Stack>
       )}
       <div className={classes.correctAnswer}>
         {correctAnswerShow && <span> {currentQuestion.correct_answer}</span>}

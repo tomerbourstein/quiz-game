@@ -21,7 +21,7 @@ const Score = () => {
 
   // Display "Unavailable" if there less than three players, and sort them in descending order.
   const podium = () => {
-    const DUMMY_SCORE = { nickname: "Unavailable", score: 0 };
+    const DUMMY_SCORE = { nickname: "---", score: 0 };
     let players;
     if (getPlayers.length === 2) {
       players = [...getPlayers, DUMMY_SCORE];
