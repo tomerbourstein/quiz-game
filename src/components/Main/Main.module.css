@@ -18,3 +18,9 @@
 .instructions {
   margin-left: 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .playersTable {
+    visibility: hidden;
+  }
+}

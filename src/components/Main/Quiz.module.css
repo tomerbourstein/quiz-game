@@ -58,3 +58,9 @@
 .btn:hover {
   background-color: #ffde29;
 }
+
+@media only screen and (max-width: 600px) {
+  .box {
+    width: 100%;
+  }
+}

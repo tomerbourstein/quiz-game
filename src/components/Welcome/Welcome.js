@@ -5,7 +5,6 @@ import { uiActions } from "../../store/ui-slice";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
 import classes from "./Homepage.module.css";

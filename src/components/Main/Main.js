@@ -20,6 +20,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 import classes from "./Main.module.css";
+import DrawerLeft from "./DrawerLeft";
 
 let isInitial = true;
 const Main = () => {
@@ -27,6 +28,7 @@ const Main = () => {
   const isAdmin = useSelector((state) => state.database.isAdmin);
   const quizShow = useSelector((state) => state.ui.quizShow);
   const podiumShow = useSelector((state) => state.ui.podiumShow);
+  const screenWidth = useSelector((state) => state.ui.screenWidth);
   const dispatch = useDispatch();
 
   const [quiz, setQuiz] = useState([]);
@@ -100,16 +102,26 @@ const Main = () => {
             </p>
           )}
 
-          <CardActions sx={{ height: "2.1rem" }}>
+          <CardActions sx={{ height: isAdmin && !quizShow ? "2.1rem" : "0" }}>
             {isAdmin && !quizShow && (
               <Button onClick={startQuizHandler}>Start Quiz</Button>
             )}
           </CardActions>
+
           <Box className={classes.box}>
-            <Players />
-            <Divider orientation="vertical" flexItem />
+            {screenWidth > 600 ? (
+              <>
+                {" "}
+                <Players />
+                <Divider orientation="vertical" flexItem />{" "}
+              </>
+            ) : null}
             {quizShow ? <Quiz quiz={quiz} /> : <div> </div>}
           </Box>
+
+          <CardActions>
+            <DrawerLeft />
+          </CardActions>
         </CardContent>
       </Card>
 
