@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Homepage from "./components/Welcome/Homepage";
 import Main from "./components/Main/Main";
+import Loading from "./components/UI/Loading";
 
 import "./App.css";
 
@@ -16,8 +17,8 @@ function getWindowSize() {
 function App() {
   const homepageShow = useSelector((state) => state.ui.homepageShow);
   const mainShow = useSelector((state) => state.ui.mainShow);
+  const isLoading = useSelector((state) => state.ui.isLoading);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -33,10 +34,15 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       <div className="wrapper">
         {homepageShow && <Homepage />}
+
+        {isLoading && <Loading />}
+
         {mainShow && <Main />}
       </div>
+
       <Footer />
     </div>
   );

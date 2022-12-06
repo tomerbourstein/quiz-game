@@ -12,6 +12,8 @@ import {
 import Players from "./Players";
 import Quiz from "./Quiz";
 import Score from "./Score";
+import DrawerLeft from "./DrawerLeft";
+
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -20,7 +22,6 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 import classes from "./Main.module.css";
-import DrawerLeft from "./DrawerLeft";
 
 let isInitial = true;
 const Main = () => {
@@ -89,7 +90,7 @@ const Main = () => {
     }
   };
   return (
-    <div className={classes.Main}>
+    <div>
       <Card className={classes.card}>
         <CardContent>
           {isAdmin && !quizShow && (

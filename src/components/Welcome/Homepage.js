@@ -15,9 +15,11 @@ const Homepage = () => {
   const enterRoomDialogShow = useSelector(
     (state) => state.ui.enterRoomDialogShow
   );
+  const startAnimation = useSelector((state) => state.ui.startAnimation);
 
+  const animationClass = startAnimation && classes.rollout;
   return (
-    <Card className={classes.card}>
+    <Card className={`${classes.card} ${animationClass}`}>
       <Welcome />
       {createRoomDialogShow && enterRoomDialogShow && (
         <Divider variant="middle" />

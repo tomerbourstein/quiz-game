@@ -36,7 +36,15 @@ const CreateRoom = () => {
     createRoomAndPlayers(nickname, roomKey, true, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
     dispatch(databaseActions.setAdmin());
-    dispatch(uiActions.openQuizComponent());
+    dispatch(uiActions.playAnimation());
+
+    setTimeout(() => {
+      dispatch(uiActions.isLoading(true));
+    }, 500);
+
+    setTimeout(() => {
+      dispatch(uiActions.openQuizComponent());
+    }, 1500);
   };
 
   const copyToClipboardHandler = (roomKey) => {

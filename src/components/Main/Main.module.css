@@ -2,6 +2,7 @@
   color: rgba(0, 0, 0, 0.6) !important;
   width: 80vw;
   margin: 2rem auto;
+  animation: roll-in .5s ease;
 }
 
 .box {
@@ -20,10 +21,22 @@
   font-family: "Bangers", cursive;
 }
 
+@keyframes roll-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .playersTable {
     visibility: hidden;
   }
   .openScoreboardButton {
-margin-top: 2rem;  }
+    margin-top: 2rem;
+  }
 }

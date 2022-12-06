@@ -42,6 +42,21 @@
   padding: 0 0.5rem 0 1.5rem;
 }
 
+.rollout {
+  animation: roll-out 0.5s ease;
+}
+
+@keyframes roll-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 2rem;
