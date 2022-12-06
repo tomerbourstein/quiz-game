@@ -1,15 +1,10 @@
-h1,
-h2 {
-  font-weight: lighter;
-}
-
 .card {
   font-family: "Bangers", cursive;
-
   text-align: center;
   width: 50rem;
   margin: 2rem auto;
   color: rgba(0, 0, 0, 0.6) !important;
+  letter-spacing: 1.5px;
 }
 .headingMobile {
   display: none;

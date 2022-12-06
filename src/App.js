@@ -23,7 +23,7 @@ function App() {
     const handleWindowResize = () => {
       dispatch(uiActions.setScreenWidth(getWindowSize()));
     };
-
+    handleWindowResize();
     window.addEventListener("resize", handleWindowResize);
     return () => {
       window.removeEventListener("resize", handleWindowResize);
