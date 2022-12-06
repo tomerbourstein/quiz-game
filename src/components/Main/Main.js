@@ -93,8 +93,10 @@ const Main = () => {
     <div>
       <Card className={classes.card}>
         <CardContent>
+
+          <CardActions sx={{ height: isAdmin && !quizShow ? "2.1rem" : "0" }}>
           {isAdmin && !quizShow && (
-            <p className={classes.instructions}> When Ready,</p>
+            <p className={classes.instructions}> When Ready ►</p>
           )}
 
           {!isAdmin && !quizShow && (
@@ -102,8 +104,6 @@ const Main = () => {
               Wait for Admin to Start the Quiz
             </p>
           )}
-
-          <CardActions sx={{ height: isAdmin && !quizShow ? "2.1rem" : "0" }}>
             {isAdmin && !quizShow && (
               <Button onClick={startQuizHandler}>Start Quiz</Button>
             )}

@@ -27,6 +27,7 @@ const Quiz = (props) => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [strikeCounter, setStrikeCounter] = useState(1);
   const [showBonus, setShowBonus] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
 
   const triviaAnswers =
     currentQuestion.question === undefined
@@ -37,7 +38,9 @@ const Quiz = (props) => {
   const shuffledTriviaAnswers = shuffleArray(triviaAnswers);
   const { quiz } = props;
 
+  // let startAnimation = false;
   let startTime = Date.now();
+  let animationClass = startAnimation && classes.rollin;
 
   useEffect(() => {
     const currentQuestionHandler = () => {
@@ -77,6 +80,7 @@ const Quiz = (props) => {
         dispatch(uiActions.setCurrentQuestion(data.question));
       } else {
         dispatch(uiActions.setCurrentQuestion(""));
+        dispatch(uiActions.openPodiumComponent());
       }
     });
   }, [roomKey, dispatch]);
@@ -91,6 +95,13 @@ const Quiz = (props) => {
     updateUserScore(playerScore, roomKey);
     // eslint-disable-next-line
   }, [playerScore, roomKey]);
+
+  useEffect(() => {
+    setStartAnimation(true);
+    setTimeout(() => {
+      setStartAnimation(false);
+    }, 2000);
+  }, [currentQuestion]);
 
   const userChosenAnswerHandler = (chosenValue) => {
     const MAX_TIME = 15;
@@ -134,8 +145,9 @@ const Quiz = (props) => {
     const newText = text.replace(/&quot;|&#039;/g, "'").replace(/&amp;/g, "&");
     return newText;
   };
+
   return (
-    <section className={classes.box}>
+    <section className={`${classes.box} ${animationClass}`}>
       <p className={classes.questionNumber}>{questionNumber}</p>
       <div className={classes.correctScore}>
         {showBonus && (
@@ -167,7 +179,9 @@ const Quiz = (props) => {
         </Stack>
       )}
       <div className={classes.correctAnswer}>
-        {correctAnswerShow && <span> {currentQuestion.correct_answer}</span>}
+        {correctAnswerShow && (
+          <span> {transformText(currentQuestion.correct_answer)}</span>
+        )}
       </div>
     </section>
   );
