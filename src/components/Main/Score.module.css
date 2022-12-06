@@ -96,3 +96,35 @@
     opacity: 0;
   }
 }
+
+@-webkit-keyframes light {
+  0% {
+    left: -25%;
+  }
+  25% {
+    left: 85%;
+    /* opacity: 1; */
+  }
+  100% {
+    left: 85%;
+    opacity: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 70vw;
+  }
+  .podium {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .podiumBox {
+    width: 4rem;
+    font-size: 0.6rem;
+  }
+
+  img {
+    width: 3rem;
+  }
+}

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  screenWidth: null,
   homepageShow: true,
   welcomeDialogShow: true,
   createRoomDialogShow: false,
@@ -18,6 +19,9 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
+    setScreenWidth(state, action) {
+      state.screenWidth = action.payload;
+    },
     createRoom(state) {
       state.createRoomDialogShow = true;
       state.enterRoomDialogShow = false;

@@ -18,8 +18,7 @@
 }
 
 .correctScore {
-  /* text-shadow: 1px 3px 0px #000000, 0px 14px 10px rgba(0, 0, 0, 0.15),
-  0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1); */
+  height: 2rem;
   color: #00e46b;
   margin: 0;
   font-size: 1.3rem;
@@ -28,14 +27,18 @@
 }
 
 .question {
-  font-family: "Bangers", cursive;
-  letter-spacing: 3px;
+  font-family: 'Rammetto One', cursive;
+  /* letter-spacing: 1px; */
+  word-spacing: 2px;
 }
 
+.answers {
+  width: 100%;
+}
 .btn {
   border: none;
   border-radius: 5px;
-  padding: 15px 25px;
+  padding: 15px;
   font-size: 1.4rem;
   text-decoration: none;
   margin: 20px;
@@ -57,4 +60,13 @@
 
 .btn:hover {
   background-color: #ffde29;
+}
+
+.correctAnswer {
+  height: 2rem;
+}
+@media only screen and (max-width: 600px) {
+  .box {
+    width: 100%;
+  }
 }
