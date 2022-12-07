@@ -63,7 +63,7 @@ const uiSlice = createSlice({
     exitGameRoom(state) {
       state.mainShow = false;
       state.homepageShow = true;
-      state.startQuiz = false;
+      state.quizShow = false;
       state.podiumShow = false;
       state.currentQuestion = "";
       state.questionNumber = -2;

@@ -9,6 +9,15 @@ import Loading from "./components/UI/Loading";
 
 import "./App.css";
 
+// Bugs to fix:
+// 1. firebase - delete room when admin leaves, delete player when not admin.
+// 2. reset interval when restarting the quiz.
+// 3. 2X bonus doesnt display proper number.
+// 4. quiz answer disappear 50 ms too late.
+
+
+
+
 function getWindowSize() {
   const { innerWidth } = window;
   return innerWidth;
