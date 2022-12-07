@@ -54,7 +54,11 @@ const uiSlice = createSlice({
       state.currentQuestion = action.payload;
     },
     setQuestionNumber(state) {
-      state.questionNumber++;
+      if (state.questionNumber > 10) {
+        state.questionNumber = 0;
+      } else {
+        state.questionNumber++;
+      }
     },
     exitGameRoom(state) {
       state.mainShow = false;
@@ -78,7 +82,7 @@ const uiSlice = createSlice({
     },
     playAnimation(state) {
       state.startAnimation = true;
-    }
+    },
   },
 });
 

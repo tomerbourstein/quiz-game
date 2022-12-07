@@ -4,7 +4,7 @@
   max-width: 660px;
   width: 70%;
   text-align: center;
-  gap: 1.3rem;
+  gap: 1.1rem;
 }
 
 .rollin {
@@ -16,13 +16,13 @@
     0px 6px 2px rgba(0, 0, 0, 0.1), 0px 34px 30px rgba(0, 0, 0, 0.1);
   color: #ffbb3d;
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-family: "Bangers", cursive;
   letter-spacing: 3px;
 }
 
 .correctScore {
-  height: 2rem;
+  height: 1.6rem;
   color: #00e46b;
   margin: 0;
   font-size: 1.3rem;
@@ -44,7 +44,7 @@
   padding: 15px;
   font-size: 1.4rem;
   text-decoration: none;
-  margin: 20px;
+  margin: 10px;
   color: #fff !important;
   position: relative;
   display: inline-block;

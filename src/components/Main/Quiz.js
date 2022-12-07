@@ -38,7 +38,6 @@ const Quiz = (props) => {
   const shuffledTriviaAnswers = shuffleArray(triviaAnswers);
   const { quiz } = props;
 
-  // let startAnimation = false;
   let startTime = Date.now();
   let animationClass = startAnimation && classes.rollin;
 

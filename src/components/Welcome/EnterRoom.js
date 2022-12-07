@@ -43,7 +43,12 @@ const EnterRoom = () => {
 
     createRoomAndPlayers(nickname, enteredRoomKey, false, generatedNickname);
     dispatch(databaseActions.saveRoomKey(enteredRoomKey));
-    dispatch(uiActions.isLoading(true));
+    dispatch(uiActions.playAnimation());
+
+    setTimeout(() => {
+      dispatch(uiActions.isLoading(true));
+    }, 500);
+
     setTimeout(() => {
       dispatch(uiActions.openQuizComponent());
     }, 1500);
