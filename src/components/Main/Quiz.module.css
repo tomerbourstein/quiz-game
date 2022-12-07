@@ -38,6 +38,10 @@
 .answers {
   width: 100%;
 }
+
+.rolldown {
+  animation: roll-down .2s ease;
+}
 .btn {
   border: none;
   border-radius: 5px;
@@ -77,6 +81,17 @@
   100% {
     opacity: 1;
     transform: translateX(0px);
+  }
+}
+
+@keyframes roll-down {
+  0% {
+    opacity: 1;
+    transform: translatey(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translatey(100%);
   }
 }
 

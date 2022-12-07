@@ -28,6 +28,7 @@ const Quiz = (props) => {
   const [strikeCounter, setStrikeCounter] = useState(1);
   const [showBonus, setShowBonus] = useState(false);
   const [startAnimation, setStartAnimation] = useState(false);
+  const [startButtonsAnimation, setStartButtonsAnimation] = useState(false);
 
   const triviaAnswers =
     currentQuestion.question === undefined
@@ -40,6 +41,7 @@ const Quiz = (props) => {
 
   let startTime = Date.now();
   let animationClass = startAnimation && classes.rollin;
+  let buttonsAnimationClass = startButtonsAnimation && classes.rolldown;
 
   useEffect(() => {
     const currentQuestionHandler = () => {
@@ -79,7 +81,20 @@ const Quiz = (props) => {
         dispatch(uiActions.setCurrentQuestion(data.question));
       } else {
         dispatch(uiActions.setCurrentQuestion(""));
+      }
+    });
+  }, [roomKey, dispatch]);
+
+  useEffect(() => {
+    const db = getDatabase();
+    const quizRef = ref(db, "rooms/" + roomKey + "/start");
+    let data;
+    return onValue(quizRef, (snapshot) => {
+      data = snapshot.val();
+      if (!data.start) {
+        console.log("this is the data " + data.start);
         dispatch(uiActions.openPodiumComponent());
+      } else {
       }
     });
   }, [roomKey, dispatch]);
@@ -107,7 +122,17 @@ const Quiz = (props) => {
     const timeLeftInSeconds = () =>
       MAX_TIME - Math.floor(timePassedInSeconds(startTime));
     const timeBonus = timeLeftInSeconds() * 100;
-    dispatch(uiActions.showAllAnswers(false));
+
+    setStartButtonsAnimation(true);
+
+    setTimeout(() => {
+      dispatch(uiActions.showAllAnswers(false));
+    }, 200);
+
+    setTimeout(() => {
+      setStartButtonsAnimation(false);
+    }, 2000);
+
     if (currentQuestion.correct_answer === chosenValue) {
       setIsAnswerCorrect(true);
       setShowBonus(true);
@@ -163,7 +188,7 @@ const Quiz = (props) => {
       </div>
       <Timer />
       {allAnswersShow && (
-        <Stack className={classes.answers}>
+        <Stack className={`${classes.answers} ${buttonsAnimationClass}`}>
           {shuffledTriviaAnswers !== undefined
             ? shuffledTriviaAnswers.map((answer, index) => (
                 <button
