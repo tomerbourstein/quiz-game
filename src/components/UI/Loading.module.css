@@ -1,0 +1,14 @@
+.circularProgressBox {
+  width: 50rem;
+  text-align: center;
+  margin: 11rem auto;
+}
+
+.circularProgressBox svg {
+  color: #ff0063 !important;
+}
+@media only screen and (max-width: 600px) {
+  .circularProgressBox {
+    width: 20rem;
+  }
+}

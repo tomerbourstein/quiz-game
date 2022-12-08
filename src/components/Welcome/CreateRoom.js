@@ -8,7 +8,6 @@ import { randomNumber } from "../../util/index";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Divider from "@mui/material/Divider";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import Superheroes from "superheroes";
@@ -37,7 +36,15 @@ const CreateRoom = () => {
     createRoomAndPlayers(nickname, roomKey, true, generatedNickname);
     dispatch(databaseActions.saveRoomKey(roomKey));
     dispatch(databaseActions.setAdmin());
-    dispatch(uiActions.openQuizComponent());
+    dispatch(uiActions.playAnimation());
+
+    setTimeout(() => {
+      dispatch(uiActions.isLoading(true));
+    }, 500);
+
+    setTimeout(() => {
+      dispatch(uiActions.openQuizComponent());
+    }, 1500);
   };
 
   const copyToClipboardHandler = (roomKey) => {
@@ -47,7 +54,6 @@ const CreateRoom = () => {
 
   return (
     <div className={classes.createRoomButtons}>
-      <Divider variant="middle" />
       <div className={classes.actionButtons}>
         <CardActions>
           <TextField

@@ -19,7 +19,7 @@ const Score = () => {
     setOpen(false);
   };
 
-  // Display "Unavailable" if there less than three players, and sort them in descending order.
+  // Display "---" if there less than three players, and sort them in descending order.
   const podium = () => {
     const DUMMY_SCORE = { nickname: "---", score: 0 };
     let players;

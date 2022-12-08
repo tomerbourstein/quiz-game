@@ -5,8 +5,15 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Homepage from "./components/Welcome/Homepage";
 import Main from "./components/Main/Main";
+import Loading from "./components/UI/Loading";
 
 import "./App.css";
+
+// Bugs to fix:
+// 1. firebase - delete room when admin leaves, delete player when not admin.
+// 3. 2X bonus doesnt display proper number.
+// 6. podium pops not only when quiz finishes.
+// 7. restarting quiz doesn't fetch different questions.
 
 function getWindowSize() {
   const { innerWidth } = window;
@@ -16,8 +23,8 @@ function getWindowSize() {
 function App() {
   const homepageShow = useSelector((state) => state.ui.homepageShow);
   const mainShow = useSelector((state) => state.ui.mainShow);
+  const isLoading = useSelector((state) => state.ui.isLoading);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -33,10 +40,15 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       <div className="wrapper">
         {homepageShow && <Homepage />}
+
+        {isLoading && <Loading />}
+
         {mainShow && <Main />}
       </div>
+
       <Footer />
     </div>
   );

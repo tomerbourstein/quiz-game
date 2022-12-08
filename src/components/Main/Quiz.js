@@ -27,6 +27,8 @@ const Quiz = (props) => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [strikeCounter, setStrikeCounter] = useState(1);
   const [showBonus, setShowBonus] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [startButtonsAnimation, setStartButtonsAnimation] = useState(false);
 
   const triviaAnswers =
     currentQuestion.question === undefined
@@ -38,6 +40,8 @@ const Quiz = (props) => {
   const { quiz } = props;
 
   let startTime = Date.now();
+  let animationClass = startAnimation && classes.rollin;
+  let buttonsAnimationClass = startButtonsAnimation && classes.rolldown;
 
   useEffect(() => {
     const currentQuestionHandler = () => {
@@ -81,6 +85,20 @@ const Quiz = (props) => {
     });
   }, [roomKey, dispatch]);
 
+  // useEffect(() => {
+  //   const db = getDatabase();
+  //   const quizRef = ref(db, "rooms/" + roomKey + "/start");
+  //   let data;
+  //   return onValue(quizRef, (snapshot) => {
+  //     data = snapshot.val();
+  //     if (!data.start) {
+  //       console.log("this is the data " + data.start);
+  //       // dispatch(uiActions.openPodiumComponent());
+  //     } else {
+  //     }
+  //   });
+  // }, [roomKey, dispatch]);
+
   useEffect(() => {
     // eslint-disable-next-line
     startTime = Date.now();
@@ -92,12 +110,29 @@ const Quiz = (props) => {
     // eslint-disable-next-line
   }, [playerScore, roomKey]);
 
+  useEffect(() => {
+    setStartAnimation(true);
+    setTimeout(() => {
+      setStartAnimation(false);
+    }, 2000);
+  }, [currentQuestion]);
+
   const userChosenAnswerHandler = (chosenValue) => {
     const MAX_TIME = 15;
     const timeLeftInSeconds = () =>
       MAX_TIME - Math.floor(timePassedInSeconds(startTime));
     const timeBonus = timeLeftInSeconds() * 100;
-    dispatch(uiActions.showAllAnswers(false));
+
+    setStartButtonsAnimation(true);
+
+    setTimeout(() => {
+      dispatch(uiActions.showAllAnswers(false));
+    }, 180);
+
+    setTimeout(() => {
+      setStartButtonsAnimation(false);
+    }, 2000);
+
     if (currentQuestion.correct_answer === chosenValue) {
       setIsAnswerCorrect(true);
       setShowBonus(true);
@@ -127,15 +162,17 @@ const Quiz = (props) => {
   };
 
   const transformText = (text) => {
-    if (text === undefined) {
-      return;
-    }
+    if (text === undefined) return;
 
-    const newText = text.replace(/&quot;|&#039;/g, "'").replace(/&amp;/g, "&");
+    const newText = text
+      .replace(/&quot;|&#039;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/&eacute;/g, "é");
     return newText;
   };
+
   return (
-    <section className={classes.box}>
+    <section className={`${classes.box} ${animationClass}`}>
       <p className={classes.questionNumber}>{questionNumber}</p>
       <div className={classes.correctScore}>
         {showBonus && (
@@ -152,7 +189,7 @@ const Quiz = (props) => {
       </div>
       <Timer />
       {allAnswersShow && (
-        <Stack className={classes.answers}>
+        <Stack className={`${classes.answers} ${buttonsAnimationClass}`}>
           {shuffledTriviaAnswers !== undefined
             ? shuffledTriviaAnswers.map((answer, index) => (
                 <button
@@ -167,7 +204,9 @@ const Quiz = (props) => {
         </Stack>
       )}
       <div className={classes.correctAnswer}>
-        {correctAnswerShow && <span> {currentQuestion.correct_answer}</span>}
+        {correctAnswerShow && (
+          <span> {transformText(currentQuestion.correct_answer)}</span>
+        )}
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ const initialState = {
   welcomeDialogShow: true,
   createRoomDialogShow: false,
   enterRoomDialogShow: false,
+  isLoading: false,
   mainShow: false,
   quizShow: false,
   podiumShow: false,
@@ -13,6 +14,7 @@ const initialState = {
   questionNumber: -2,
   correctAnswerShow: false,
   allAnswersShow: true,
+  startAnimation: false,
 };
 
 const uiSlice = createSlice({
@@ -30,10 +32,14 @@ const uiSlice = createSlice({
       state.createRoomDialogShow = false;
       state.enterRoomDialogShow = true;
     },
-    openQuizComponent(state) {
+    isLoading(state, action) {
       state.createRoomDialogShow = false;
       state.enterRoomDialogShow = false;
       state.homepageShow = false;
+      state.isLoading = action.payload;
+    },
+    openQuizComponent(state) {
+      state.isLoading = false;
       state.mainShow = true;
     },
     startQuiz(state) {
@@ -48,12 +54,16 @@ const uiSlice = createSlice({
       state.currentQuestion = action.payload;
     },
     setQuestionNumber(state) {
-      state.questionNumber++;
+      if (state.questionNumber > 10) {
+        state.questionNumber = 0;
+      } else {
+        state.questionNumber++;
+      }
     },
     exitGameRoom(state) {
       state.mainShow = false;
       state.homepageShow = true;
-      state.startQuiz = false;
+      state.quizShow = false;
       state.podiumShow = false;
       state.currentQuestion = "";
       state.questionNumber = -2;
@@ -69,6 +79,9 @@ const uiSlice = createSlice({
     },
     showAllAnswers(state, action) {
       state.allAnswersShow = action.payload;
+    },
+    playAnimation(state) {
+      state.startAnimation = true;
     },
   },
 });
