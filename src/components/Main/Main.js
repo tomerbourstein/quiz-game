@@ -37,25 +37,25 @@ const Main = () => {
   useEffect(() => {
     if (isInitial) {
       if (isAdmin) {
-        const triviaRequest = async () => {
-          const response = await fetch("https://opentdb.com/api.php?amount=10");
-          const data = await response.json();
-          setQuiz(data.results);
-        };
-        triviaRequest();
+  const triviaRequest = async () => {
+    const response = await fetch("https://opentdb.com/api.php?amount=10");
+    const data = await response.json();
+    setQuiz(data.results);
+  };
+      triviaRequest();
       } else {
-        const db = getDatabase();
-        const startRef = ref(db, "rooms/" + roomKey + "/start");
-        onValue(startRef, (snapshot) => {
-          const startData = snapshot.val();
-          if (startData) {
-            dispatch(uiActions.startQuiz());
-          }
-          if (!startData) {
-            const newScore = 0;
-            updateUserScore(newScore, roomKey);
-          }
-        });
+    const db = getDatabase();
+    const startRef = ref(db, "rooms/" + roomKey + "/start");
+    onValue(startRef, (snapshot) => {
+      const startData = snapshot.val();
+      if (startData) {
+        dispatch(uiActions.startQuiz());
+      }
+      if (!startData) {
+        const newScore = 0;
+        updateUserScore(newScore, roomKey);
+      }
+    });
       }
     }
     isInitial = false;
@@ -95,15 +95,15 @@ const Main = () => {
         <CardContent>
 
           <CardActions sx={{ height: isAdmin && !quizShow ? "2.1rem" : "0" }}>
-          {isAdmin && !quizShow && (
-            <p className={classes.instructions}> When Ready ►</p>
-          )}
+            {isAdmin && !quizShow && (
+              <p className={classes.instructions}> When Ready ►</p>
+            )}
 
-          {!isAdmin && !quizShow && (
-            <p className={classes.instructions}>
-              Wait for Admin to Start the Quiz
-            </p>
-          )}
+            {!isAdmin && !quizShow && (
+              <p className={classes.instructions}>
+                Wait for Admin to Start the Quiz
+              </p>
+            )}
             {isAdmin && !quizShow && (
               <Button onClick={startQuizHandler}>Start Quiz</Button>
             )}
@@ -130,7 +130,7 @@ const Main = () => {
 
       <Card className={classes.card}>
         <CardActions className={classes.actionButtons}>
-          {isAdmin && (
+          {isAdmin && !quizShow && (
             <Button onClick={restartQuizHandler}> Restart Quiz </Button>
           )}
           <Button onClick={exitGameRoomHandler}> Exit Game Room </Button>

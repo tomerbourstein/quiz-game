@@ -85,19 +85,19 @@ const Quiz = (props) => {
     });
   }, [roomKey, dispatch]);
 
-  useEffect(() => {
-    const db = getDatabase();
-    const quizRef = ref(db, "rooms/" + roomKey + "/start");
-    let data;
-    return onValue(quizRef, (snapshot) => {
-      data = snapshot.val();
-      if (!data.start) {
-        console.log("this is the data " + data.start);
-        dispatch(uiActions.openPodiumComponent());
-      } else {
-      }
-    });
-  }, [roomKey, dispatch]);
+  // useEffect(() => {
+  //   const db = getDatabase();
+  //   const quizRef = ref(db, "rooms/" + roomKey + "/start");
+  //   let data;
+  //   return onValue(quizRef, (snapshot) => {
+  //     data = snapshot.val();
+  //     if (!data.start) {
+  //       console.log("this is the data " + data.start);
+  //       // dispatch(uiActions.openPodiumComponent());
+  //     } else {
+  //     }
+  //   });
+  // }, [roomKey, dispatch]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -162,11 +162,12 @@ const Quiz = (props) => {
   };
 
   const transformText = (text) => {
-    if (text === undefined) {
-      return;
-    }
+    if (text === undefined) return;
 
-    const newText = text.replace(/&quot;|&#039;/g, "'").replace(/&amp;/g, "&");
+    const newText = text
+      .replace(/&quot;|&#039;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/&eacute;/g, "é");
     return newText;
   };
 
