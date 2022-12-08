@@ -11,12 +11,12 @@ import "./App.css";
 
 // Bugs to fix:
 // 1. firebase - delete room when admin leaves, delete player when not admin.
-// 2. reset interval when restarting the quiz.
+
 // 3. 2X bonus doesnt display proper number.
 // 4. quiz answer disappear 50 ms too late.
-
-
-
+// 5. add transform text, 'é'.
+// 6. podium pops not only when quiz finishes.
+// 7. restarting quiz doesn't fetch different questions. 
 
 function getWindowSize() {
   const { innerWidth } = window;
