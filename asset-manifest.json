@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/quiz-game/static/css/main.80fce025.css",
+    "main.js": "/quiz-game/static/js/main.b85df0a3.js",
+    "static/media/quiz-logo.png": "/quiz-game/static/media/quiz-logo.19f1008d49be52fed09b.png",
+    "index.html": "/quiz-game/index.html",
+    "main.80fce025.css.map": "/quiz-game/static/css/main.80fce025.css.map",
+    "main.b85df0a3.js.map": "/quiz-game/static/js/main.b85df0a3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.80fce025.css",
+    "static/js/main.b85df0a3.js"
+  ]
+}
