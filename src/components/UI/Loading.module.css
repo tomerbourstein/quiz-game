@@ -5,8 +5,7 @@
 }
 
 .circularProgressBox svg {
-    color: #FF0063 !important;
-    
+  color: #ff0063 !important;
 }
 @media only screen and (max-width: 600px) {
   .circularProgressBox {

@@ -6,7 +6,7 @@ import classes from "./Loading.module.css";
 const Loading = () => {
   return (
     <Box className={classes.circularProgressBox}>
-      <CircularProgress thickness={10}  color="inherit"/>
+      <CircularProgress thickness={10} color="inherit" />
     </Box>
   );
 };

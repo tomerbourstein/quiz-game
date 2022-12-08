@@ -21,7 +21,12 @@ const DrawerLeft = () => {
 
   return (
     <Fragment>
-      <Button onClick={toggleDrawer(true)} className={classes.toggleDrawerButton}>Scoreboard</Button>
+      <Button
+        onClick={toggleDrawer(true)}
+        className={classes.toggleDrawerButton}
+      >
+        Scoreboard
+      </Button>
       <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
         <Players
           onClick={toggleDrawer(false)}

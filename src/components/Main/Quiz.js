@@ -127,7 +127,7 @@ const Quiz = (props) => {
 
     setTimeout(() => {
       dispatch(uiActions.showAllAnswers(false));
-    }, 200);
+    }, 180);
 
     setTimeout(() => {
       setStartButtonsAnimation(false);
